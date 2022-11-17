@@ -66,8 +66,8 @@ namespace lve {
 			recreateSwapChain();
 			return nullptr;
 		}
-Desktop
-		if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {Desktop
+
+		if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
 			throw std::runtime_error("failed to acquire swap chain image");
 		}
 

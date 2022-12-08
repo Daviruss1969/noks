@@ -88,7 +88,7 @@ void FirstApp::loadGameObjects() {
 
     gameObject = LveGameObject::createGameObject();
     gameObject.model = lveModel;
-    gameObject.transform.translation = { -.8f, 1.f, 4.75f };
+    gameObject.transform.translation = { -.8f, 1.f, 4.85f };
     gameObject.transform.rotation.x = glm::radians<float>(180);
     gameObject.transform.rotation.y = glm::radians<float>(-90);
     gameObject.transform.scale = glm::vec3{ 1.5f };

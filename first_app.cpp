@@ -19,8 +19,10 @@
 namespace lve {
 
     struct GlobalUbo {
-        alignas(16) glm::mat4 projectionView{ 1.f };
-        alignas(16) glm::vec3 lightDirection = glm::normalize(glm::vec3{ 1.f, -3.f, -1.f });
+        glm::mat4 projectionView{ 1.f };
+        glm::vec4 ambiantColor{1.f, 1.f, 1.f, .02f}; // w =>  intensity
+        glm::vec3 lightPosition{ -1.f };
+        alignas(16) glm::vec4 lightColor{ 1.f }; // w => light intensity
     };
 FirstApp::FirstApp() {
     globalPool = LveDescriptorPool::Builder(lveDevice)
@@ -62,6 +64,7 @@ void FirstApp::run() {
     camera.setViewTarget(glm::vec3(-1.f, -2.f, -2.f), glm::vec3(0.f, 0.f, 2.5f));
 
     auto viewerObject = LveGameObject::createGameObject();
+    viewerObject.transform.translation.z = -3.5f;
     KeyboardMovementController cameraController{};
 
     auto currentTime = std::chrono::high_resolution_clock::now();
@@ -79,7 +82,7 @@ void FirstApp::run() {
         camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
         float aspect = lveRenderer.getAspectRatio();
-        camera.setPerspectiveProjection(glm::radians(50.f), aspect, 1.0f, 10.f);
+        camera.setPerspectiveProjection(glm::radians(50.f), aspect, 1.0f, 100.f);
 
 		if (auto commandBuffer = lveRenderer.beginFrame()) {
             int frameIndex = lveRenderer.getFrameIndex();
@@ -112,35 +115,39 @@ void FirstApp::loadGameObjects() {
 
     auto gameObject = LveGameObject::createGameObject();
     gameObject.model = lveModel;
-    gameObject.transform.translation = { .0f, .0f, 5.f };
+    gameObject.transform.translation = { .0f, .0f, 0.f };
     gameObject.transform.scale = glm::vec3{ 3.f };
     gameObjects.push_back(std::move(gameObject));
 
     lveModel = LveModel::createModelFromFile(lveDevice, "models\\colored_cube.obj");
-
     gameObject = LveGameObject::createGameObject();
     gameObject.model = lveModel;
-    gameObject.transform.translation = { .0f, .5f, 5.f };
+    gameObject.transform.translation = { .0f, .5f, 0.f };
     gameObject.transform.scale = glm::vec3{ 0.5f };
     gameObjects.push_back(std::move(gameObject));
 
     lveModel = LveModel::createModelFromFile(lveDevice, "models\\heart.obj");
-
     gameObject = LveGameObject::createGameObject();
     gameObject.model = lveModel;
-    gameObject.transform.translation = { 1.3f, .5f, 5.f };
+    gameObject.transform.translation = { 1.3f, .5f, 0.f };
     gameObject.transform.rotation.x = glm::radians<float>(90);
     gameObject.transform.scale = glm::vec3{ 0.1f };
     gameObjects.push_back(std::move(gameObject));
 
     lveModel = LveModel::createModelFromFile(lveDevice, "models\\girl OBJ.obj");
-
     gameObject = LveGameObject::createGameObject();
     gameObject.model = lveModel;
-    gameObject.transform.translation = { -.8f, 1.f, 4.85f };
+    gameObject.transform.translation = { -.8f, 1.f, .25f };
     gameObject.transform.rotation.x = glm::radians<float>(180);
     gameObject.transform.rotation.y = glm::radians<float>(-90);
     gameObject.transform.scale = glm::vec3{ 1.5f };
     gameObjects.push_back(std::move(gameObject));
+
+    lveModel = LveModel::createModelFromFile(lveDevice, "models\\quad.obj");
+    auto floor = LveGameObject::createGameObject();
+    floor.model = lveModel;
+    floor.transform.translation = { 0.f, 1.f, 0.f };
+    floor.transform.scale = glm::vec3{ 6.f, 1.f, 6.f };
+    gameObjects.push_back(std::move(floor));
 }
 }

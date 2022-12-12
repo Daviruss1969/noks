@@ -127,12 +127,6 @@
     <Object Include="models\cube.obj">
       <Filter>models</Filter>
     </Object>
-    <Object Include="models\flat_vase.obj">
-      <Filter>models</Filter>
-    </Object>
-    <Object Include="models\girl OBJ.obj">
-      <Filter>models</Filter>
-    </Object>
     <Object Include="models\heart.obj">
       <Filter>models</Filter>
     </Object>
@@ -140,6 +134,12 @@
       <Filter>models</Filter>
     </Object>
     <Object Include="models\smooth_vase.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\flat_vase.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\girl OBJ.obj">
       <Filter>models</Filter>
     </Object>
   </ItemGroup>

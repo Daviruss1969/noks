@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{057a5a94-64dc-4969-82ad-841826f32b86}</UniqueIdentifier>
+    </Filter>
     <Filter Include="shaders">
       <UniqueIdentifier>{bdb9ef35-f89c-483e-841c-7e868254f14a}</UniqueIdentifier>
     </Filter>
@@ -116,5 +119,28 @@
     <None Include="shaders\compile.bat">
       <Filter>shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="models\colored_cube.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\cube.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\flat_vase.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\girl OBJ.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\heart.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\quad.obj">
+      <Filter>models</Filter>
+    </Object>
+    <Object Include="models\smooth_vase.obj">
+      <Filter>models</Filter>
+    </Object>
   </ItemGroup>
 </Project>

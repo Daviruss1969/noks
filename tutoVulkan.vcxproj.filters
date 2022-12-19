@@ -157,7 +157,7 @@
     <Object Include="models\flat_vase.obj">
       <Filter>models</Filter>
     </Object>
-    <Object Include="models\girl OBJ.obj">
+    <Object Include="models\girl.obj">
       <Filter>models</Filter>
     </Object>
   </ItemGroup>

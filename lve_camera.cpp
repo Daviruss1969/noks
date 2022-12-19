@@ -1,9 +1,11 @@
 #include "lve_camera.hpp"
 
+// std
 #include <cassert>
 #include <limits>
 
 namespace lve {
+
     void LveCamera::setOrthographicProjection(
         float left, float right, float top, float bottom, float near, float far) {
         projectionMatrix = glm::mat4{ 1.0f };
@@ -74,6 +76,5 @@ namespace lve {
         viewMatrix[3][1] = -glm::dot(v, position);
         viewMatrix[3][2] = -glm::dot(w, position);
     }
-}
 
-
+}  // namespace lve

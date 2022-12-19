@@ -1,9 +1,7 @@
 #include "lve_game_object.hpp"
 
 namespace lve {
-    // Matrix corrsponds to Translate * Ry * Rx * Rz * Scale
-    // Rotations correspond to Tait-bryan angles of Y(1), X(2), Z(3)
-    // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+
     glm::mat4 TransformComponent::mat4() {
         const float c3 = glm::cos(rotation.z);
         const float s3 = glm::sin(rotation.z);
@@ -30,8 +28,7 @@ namespace lve {
                 scale.z * (c1 * c2),
                 0.0f,
             },
-            {translation.x, translation.y, translation.z, 1.0f} 
-        };
+            {translation.x, translation.y, translation.z, 1.0f} };
     }
 
     glm::mat3 TransformComponent::normalMatrix() {
@@ -58,7 +55,17 @@ namespace lve {
                 invScale.z * (c2 * s1),
                 invScale.z * (-s2),
                 invScale.z * (c1 * c2),
-            }
+            },
         };
     }
-}
+
+    LveGameObject LveGameObject::makePointLight(float intensity, float radius, glm::vec3 color) {
+        LveGameObject gameObj = LveGameObject::createGameObject();
+        gameObj.color = color;
+        gameObj.transform.scale.x = radius;
+        gameObj.pointLight = std::make_unique<PointLightComponent>();
+        gameObj.pointLight->lightIntensity = intensity;
+        return gameObj;
+    }
+
+}  // namespace lve

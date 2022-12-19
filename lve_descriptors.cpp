@@ -26,7 +26,6 @@ namespace lve {
     std::unique_ptr<LveDescriptorSetLayout> LveDescriptorSetLayout::Builder::build() const {
         return std::make_unique<LveDescriptorSetLayout>(lveDevice, bindings);
     }
-    
 
     // *************** Descriptor Set Layout *********************
 
@@ -56,7 +55,6 @@ namespace lve {
         vkDestroyDescriptorSetLayout(lveDevice.device(), descriptorSetLayout, nullptr);
     }
 
-
     // *************** Descriptor Pool Builder *********************
 
     LveDescriptorPool::Builder& LveDescriptorPool::Builder::addPoolSize(
@@ -78,7 +76,6 @@ namespace lve {
     std::unique_ptr<LveDescriptorPool> LveDescriptorPool::Builder::build() const {
         return std::make_unique<LveDescriptorPool>(lveDevice, maxSets, poolFlags, poolSizes);
     }
-
 
     // *************** Descriptor Pool *********************
 
@@ -132,7 +129,6 @@ namespace lve {
     void LveDescriptorPool::resetPool() {
         vkResetDescriptorPool(lveDevice.device(), descriptorPool, 0);
     }
-
 
     // *************** Descriptor Writer *********************
 
@@ -196,4 +192,5 @@ namespace lve {
         }
         vkUpdateDescriptorSets(pool.lveDevice.device(), writes.size(), writes.data(), 0, nullptr);
     }
-};
+
+}  // namespace lve

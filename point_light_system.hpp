@@ -11,25 +11,25 @@
 #include <vector>
 
 namespace lve {
-class PointLightSystem {
- public:
-  PointLightSystem(
-      LveDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
-  ~PointLightSystem();
+	class PointLightSystem {
+	public:
+		PointLightSystem(
+			LveDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+		~PointLightSystem();
 
-  PointLightSystem(const PointLightSystem &) = delete;
-  PointLightSystem &operator=(const PointLightSystem &) = delete;
+		PointLightSystem(const PointLightSystem&) = delete;
+		PointLightSystem& operator=(const PointLightSystem&) = delete;
 
-  void update(FrameInfo &frameInfo, GlobalUbo &ubo);
-  void render(FrameInfo &frameInfo);
+		void update(FrameInfo& frameInfo, GlobalUbo& ubo);
+		void render(FrameInfo& frameInfo);
 
- private:
-  void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
-  void createPipeline(VkRenderPass renderPass);
+	private:
+		void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
+		void createPipeline(VkRenderPass renderPass);
 
-  LveDevice &lveDevice;
+		LveDevice& lveDevice;
 
-  std::unique_ptr<LvePipeline> lvePipeline;
-  VkPipelineLayout pipelineLayout;
-};
+		std::unique_ptr<LvePipeline> lvePipeline;
+		VkPipelineLayout pipelineLayout;
+	};
 }  // namespace lve

@@ -25,6 +25,9 @@
     <Filter Include="Fichiers d%27en-tête\systems">
       <UniqueIdentifier>{8c846e63-4b4e-4a55-90ff-fe98d0567b66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="iamgui">
+      <UniqueIdentifier>{9effe7aa-e2b9-4c36-98c1-9a234b70cbdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -69,6 +72,30 @@
     </ClCompile>
     <ClCompile Include="point_light_system.cpp">
       <Filter>Fichiers sources\systems</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_draw.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_tables.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_widgets.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_glfw.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_vulkan.cpp">
+      <Filter>iamgui</Filter>
+    </ClCompile>
+    <ClCompile Include="lve_user_interface.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +146,24 @@
     </ClInclude>
     <ClInclude Include="point_light_system.hpp">
       <Filter>Fichiers d%27en-tête\systems</Filter>
+    </ClInclude>
+    <ClInclude Include="imconfig.h">
+      <Filter>iamgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui.h">
+      <Filter>iamgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>iamgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_glfw.h">
+      <Filter>iamgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_vulkan.h">
+      <Filter>iamgui</Filter>
+    </ClInclude>
+    <ClInclude Include="lve_user_interface.hpp">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

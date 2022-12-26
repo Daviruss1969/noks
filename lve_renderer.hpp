@@ -19,6 +19,7 @@ namespace lve {
 		LveRenderer& operator=(const LveRenderer&) = delete;
 
 		VkRenderPass getSwapChainRenderPass() const { return lveSwapChain->getRenderPass(); }
+		VkFormat getSwapChainFormat() const { return lveSwapChain->getSwapChainImageFormat(); }
 		float getAspectRatio() const { return lveSwapChain->extentAspectRatio(); }
 		bool isFrameInProgress() const { return isFrameStarted; }
 
@@ -36,6 +37,8 @@ namespace lve {
 		void endFrame();
 		void beginSwapChainRenderPass(VkCommandBuffer commandBuffer);
 		void endSwapChainRenderPass(VkCommandBuffer commandBuffer);
+		VkCommandBuffer beginSingleTimeCommand();
+		void endSingleTimeCommand(VkCommandBuffer commandBuffer);
 
 	private:
 		void createCommandBuffers();

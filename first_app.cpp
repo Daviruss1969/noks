@@ -74,7 +74,7 @@ namespace lve {
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
 
-
+		LveInterfaceEvents* interfaceEvents = nullptr;
 		while (!lveWindow.shouldClose()) {
 			glfwPollEvents();
 			if (userInterface.getWindowStep() == LVE_WINDOW_STEP_CHOOSE_PROJECT) {
@@ -124,10 +124,27 @@ namespace lve {
 					// order matter here
 					simpleRenderSystem.renderGameObjects(frameInfo);
 					pointLightSystem.render(frameInfo);
-					userInterface.render(frameInfo.commandBuffer);
+					interfaceEvents = userInterface.render(frameInfo.commandBuffer);
 
 					lveRenderer.endSwapChainRenderPass(commandBuffer);
 					lveRenderer.endFrame();
+				}
+			}
+
+			// check events
+			if (interfaceEvents != nullptr) {
+				if (*interfaceEvents == LVE_INTERFACE_EVENT_NEW_PROJECT) {
+					newProject();
+					*interfaceEvents = LVE_NULL; // reset event flags
+				}
+				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_COMPONENT) {
+					TransformComponent transform{};
+					addGameObjects("models/girl.obj", transform);
+					*interfaceEvents = LVE_NULL;
+				}
+				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_POINTLIGHT) {
+					addPointLight(glm::vec3{1.f, 1.f, 1.f});
+					*interfaceEvents = LVE_NULL;
 				}
 			}
 		}
@@ -135,54 +152,78 @@ namespace lve {
 		vkDeviceWaitIdle(lveDevice.device());
 	}
 
+	void FirstApp::newProject() {
+		gameObjects.clear();
+		TransformComponent transform {};
+		transform.translation = { 0.f, .5f, 0.f };
+		transform.scale = { 3.f, 1.f, 3.f };
+		addGameObjects("models/quad.obj", transform);
+	}
+
+	void FirstApp::addGameObjects(std::string path, TransformComponent transform) {
+		std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(lveDevice, path);
+		auto object = LveGameObject::createGameObject();
+		object.model = lveModel;
+		object.transform = transform;
+		gameObjects.emplace(object.getId(), std::move(object));
+	}
+
+	void FirstApp::addPointLight(glm::vec3 color) {
+		auto pointLight = LveGameObject::makePointLight(0.2f);
+		pointLight.color = color;
+		gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+	}
+
+
+
 	void FirstApp::loadGameObjects() {
-		std::shared_ptr<LveModel> lveModel =
-			LveModel::createModelFromFile(lveDevice, "models/flat_vase.obj");
-		auto flatVase = LveGameObject::createGameObject();
-		flatVase.model = lveModel;
-		flatVase.transform.translation = { -.5f, .5f, 0.f };
-		flatVase.transform.scale = { 3.f, 1.5f, 3.f };
-		gameObjects.emplace(flatVase.getId(), std::move(flatVase));
+		//std::shared_ptr<LveModel> lveModel =
+		//	LveModel::createModelFromFile(lveDevice, "models/flat_vase.obj");
+		//auto flatVase = LveGameObject::createGameObject();
+		//flatVase.model = lveModel;
+		//flatVase.transform.translation = { -.5f, .5f, 0.f };
+		//flatVase.transform.scale = { 3.f, 1.5f, 3.f };
+		//gameObjects.emplace(flatVase.getId(), std::move(flatVase));
 
-		lveModel = LveModel::createModelFromFile(lveDevice, "models/smooth_vase.obj");
-		auto smoothVase = LveGameObject::createGameObject();
-		smoothVase.model = lveModel;
-		smoothVase.transform.translation = { .5f, .5f, 0.f };
-		smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
-		gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
+		//lveModel = LveModel::createModelFromFile(lveDevice, "models/smooth_vase.obj");
+		//auto smoothVase = LveGameObject::createGameObject();
+		//smoothVase.model = lveModel;
+		//smoothVase.transform.translation = { .5f, .5f, 0.f };
+		//smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
+		//gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
-		lveModel = LveModel::createModelFromFile(lveDevice, "models/girl.obj");
-		auto girl = LveGameObject::createGameObject();
-		girl.model = lveModel;
-		girl.transform.translation.y = .5f;
-		girl.transform.rotation.x = glm::radians(180.f);
-		gameObjects.emplace(girl.getId(), std::move(girl));
+		//lveModel = LveModel::createModelFromFile(lveDevice, "models/girl.obj");
+		//auto girl = LveGameObject::createGameObject();
+		//girl.model = lveModel;
+		//girl.transform.translation.y = .5f;
+		//girl.transform.rotation.x = glm::radians(180.f);
+		//gameObjects.emplace(girl.getId(), std::move(girl));
 
-		lveModel = LveModel::createModelFromFile(lveDevice, "models/quad.obj");
-		auto floor = LveGameObject::createGameObject();
-		floor.model = lveModel;
-		floor.transform.translation = { 0.f, .5f, 0.f };
-		floor.transform.scale = { 3.f, 1.f, 3.f };
-		gameObjects.emplace(floor.getId(), std::move(floor));
+		//std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(lveDevice, "models/quad.obj");
+		//auto floor = LveGameObject::createGameObject();
+		//floor.model = lveModel;
+		//floor.transform.translation = { 0.f, .5f, 0.f };
+		//floor.transform.scale = { 3.f, 1.f, 3.f };
+		//gameObjects.emplace(floor.getId(), std::move(floor));
 
-		std::vector<glm::vec3> lightColors{
-			{1.f, .1f, .1f},
-			{.1f, .1f, 1.f},
-			{.1f, 1.f, .1f},
-			{1.f, 1.f, .1f},
-			{.1f, 1.f, 1.f},
-			{1.f, 1.f, 1.f}  //
-		};
+		//std::vector<glm::vec3> lightColors{
+		//	{1.f, .1f, .1f},
+		//	{.1f, .1f, 1.f},
+		//	{.1f, 1.f, .1f},
+		//	{1.f, 1.f, .1f},
+		//	{.1f, 1.f, 1.f},
+		//	{1.f, 1.f, 1.f}  //
+		//};
 
-		for (int i = 0; i < lightColors.size(); i++) {
-			auto pointLight = LveGameObject::makePointLight(0.2f);
-			pointLight.color = lightColors[i];
-			auto rotateLight = glm::rotate(
-				glm::mat4(1.f),
-				(i * glm::two_pi<float>()) / lightColors.size(),
-				{ 0.f, -1.f, 0.f });
-			pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
-			gameObjects.emplace(pointLight.getId(), std::move(pointLight));
-		}
+		//for (int i = 0; i < lightColors.size(); i++) {
+		//	auto pointLight = LveGameObject::makePointLight(0.2f);
+		//	pointLight.color = lightColors[i];
+		//	auto rotateLight = glm::rotate(
+		//		glm::mat4(1.f),
+		//		(i * glm::two_pi<float>()) / lightColors.size(),
+		//		{ 0.f, -1.f, 0.f });
+		//	pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+		//	gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+		//}
 	}
 }  // namespace lve

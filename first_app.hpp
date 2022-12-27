@@ -24,6 +24,9 @@ namespace lve {
 		FirstApp& operator=(const FirstApp&) = delete;
 
 		void run();
+		void newProject();
+		void addGameObjects(std::string path, TransformComponent transform);
+		void addPointLight(glm::vec3 color);
 
 	private:
 		void loadGameObjects();

@@ -6,6 +6,7 @@
 #include "lve_window.hpp"
 #include "lve_device.hpp"
 #include "lve_renderer.hpp"
+#include "first_app.hpp"
 
 // libs
 #include <glm/glm.hpp>
@@ -27,6 +28,13 @@ namespace lve {
 		LVE_WINDOW_STEP_APP = 1
 	} LveWindowStep;
 
+	typedef enum LveInterfaceEvents {
+		LVE_NULL = 0,
+		LVE_INTERFACE_EVENT_NEW_PROJECT = 1,
+		LVE_INTERFACE_EVENT_ADD_COMPONENT = 2,
+		LVE_INTERFACE_EVENT_ADD_POINTLIGHT = 4
+	} LveInterfaceEvents;
+
 	class UserInterface {
 	public:
 		UserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer);
@@ -37,7 +45,7 @@ namespace lve {
 
 		const LveWindowStep getWindowStep() const { return lveWindowStep; }
 
-		void render(VkCommandBuffer& commandBuffer);
+		LveInterfaceEvents* render(VkCommandBuffer& commandBuffer);
 	private:
 		void createImGuiDescriptorPool();
 		void init();
@@ -51,6 +59,7 @@ namespace lve {
 		LveDevice& device;
 		LveRenderer& renderer;
 		LveWindowStep lveWindowStep{ LVE_WINDOW_STEP_CHOOSE_PROJECT };
+		LveInterfaceEvents lveInterfaceEvents{ LVE_NULL };
 
 		VkDescriptorPool ImGuiDescriptorPool;
 

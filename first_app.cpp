@@ -73,49 +73,62 @@ namespace lve {
 		KeyboardMovementController cameraController{};
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
+
+
 		while (!lveWindow.shouldClose()) {
 			glfwPollEvents();
+			if (userInterface.getWindowStep() == LVE_WINDOW_STEP_CHOOSE_PROJECT) {
+				if (auto commandBuffer = lveRenderer.beginFrame()) {
+					int frameIndex = lveRenderer.getFrameIndex();
+					lveRenderer.beginSwapChainRenderPass(commandBuffer);
 
-			auto newTime = std::chrono::high_resolution_clock::now();
-			float frameTime =
-				std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
-			currentTime = newTime;
+					userInterface.render(commandBuffer);
 
-			cameraController.moveInPlaneXZ(lveWindow.getGLFWwindow(), frameTime, viewerObject);
-			camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+					lveRenderer.endSwapChainRenderPass(commandBuffer);
+					lveRenderer.endFrame();
+				}
+			} else if (userInterface.getWindowStep() == LVE_WINDOW_STEP_APP) {
+				auto newTime = std::chrono::high_resolution_clock::now();
+				float frameTime =
+					std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
+				currentTime = newTime;
 
-			float aspect = lveRenderer.getAspectRatio();
-			camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
+				cameraController.moveInPlaneXZ(lveWindow.getGLFWwindow(), frameTime, viewerObject);
+				camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
-			if (auto commandBuffer = lveRenderer.beginFrame()) {
-				int frameIndex = lveRenderer.getFrameIndex();
-				FrameInfo frameInfo{
-					frameIndex,
-					frameTime,
-					commandBuffer,
-					camera,
-					globalDescriptorSets[frameIndex],
-					gameObjects };
+				float aspect = lveRenderer.getAspectRatio();
+				camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
 
-				// update
-				GlobalUbo ubo{};
-				ubo.projection = camera.getProjection();
-				ubo.view = camera.getView();
-				ubo.inverseView = camera.getInverseView();
-				pointLightSystem.update(frameInfo, ubo);
-				uboBuffers[frameIndex]->writeToBuffer(&ubo);
-				uboBuffers[frameIndex]->flush();
+				if (auto commandBuffer = lveRenderer.beginFrame()) {
+					int frameIndex = lveRenderer.getFrameIndex();
+					FrameInfo frameInfo{
+						frameIndex,
+						frameTime,
+						commandBuffer,
+						camera,
+						globalDescriptorSets[frameIndex],
+						gameObjects };
 
-				// render
-				lveRenderer.beginSwapChainRenderPass(commandBuffer);
+					// update
+					GlobalUbo ubo{};
+					ubo.projection = camera.getProjection();
+					ubo.view = camera.getView();
+					ubo.inverseView = camera.getInverseView();
+					pointLightSystem.update(frameInfo, ubo);
+					uboBuffers[frameIndex]->writeToBuffer(&ubo);
+					uboBuffers[frameIndex]->flush();
 
-				// order matter here
-				simpleRenderSystem.renderGameObjects(frameInfo);
-				pointLightSystem.render(frameInfo);
-				userInterface.render(frameInfo.commandBuffer);
+					// render
+					lveRenderer.beginSwapChainRenderPass(commandBuffer);
 
-				lveRenderer.endSwapChainRenderPass(commandBuffer);
-				lveRenderer.endFrame();
+					// order matter here
+					simpleRenderSystem.renderGameObjects(frameInfo);
+					pointLightSystem.render(frameInfo);
+					userInterface.render(frameInfo.commandBuffer);
+
+					lveRenderer.endSwapChainRenderPass(commandBuffer);
+					lveRenderer.endFrame();
+				}
 			}
 		}
 

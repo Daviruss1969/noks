@@ -11,6 +11,7 @@
 #include <vector>
 
 namespace lve {
+
 	class FirstApp {
 	public:
 		static constexpr int WIDTH = 800;
@@ -27,7 +28,7 @@ namespace lve {
 	private:
 		void loadGameObjects();
 
-		LveWindow lveWindow{ WIDTH, HEIGHT, "Vulkan Tutorial" };
+		LveWindow lveWindow{ WIDTH, HEIGHT, "My engine" };
 		LveDevice lveDevice{ lveWindow };
 		LveRenderer lveRenderer{ lveWindow, lveDevice };
 

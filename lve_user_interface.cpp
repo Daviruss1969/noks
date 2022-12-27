@@ -1,6 +1,7 @@
 #include "lve_user_interface.hpp"
 
 #include <stdexcept>
+#include <iostream>
 lve::UserInterface::UserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer) : window(window), device(device), renderer(renderer) {
 	init();
 }
@@ -78,11 +79,7 @@ void lve::UserInterface::init() {
 }
 
 void lve::UserInterface::render(VkCommandBuffer& commandBuffer) {
-	ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;
 
-	// We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
-	// because it would be confusing to have two docking targets within each others.
-	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 	const ImGuiViewport* viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->WorkPos);
 	ImGui::SetNextWindowSize(viewport->WorkSize);
@@ -103,24 +100,83 @@ void lve::UserInterface::render(VkCommandBuffer& commandBuffer) {
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-    ImGui::Begin("DockSpace Demo", isOpen, window_flags);
-    ImGui::PopStyleVar();
-    ImGui::PopStyleVar(2);
+	ImGui::Begin("DockSpace Demo", isOpen, window_flags);
+	ImGui::PopStyleVar();
+	ImGui::PopStyleVar(2);
 
-    // Submit the DockSpace
-    ImGuiIO& io = ImGui::GetIO();
-    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
-        ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-    }
+	// Submit the DockSpace
+	ImGuiIO& io = ImGui::GetIO();
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+	}
 
-    ImGui::ShowDemoWindow();
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("New")) {}
+			if (ImGui::MenuItem("Open")) { std::string test = OpenFile("Image file (*.png)\0*.png\0"); std::cout << test << std::endl; }
+			if (ImGui::MenuItem("Create")) { std::string test = SaveFile(""); std::cout << test << std::endl; }
+			if (ImGui::MenuItem("Save")) {}
+			if (ImGui::MenuItem("Save As")) {}
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("Close", NULL, false, isOpen != NULL))
+				*isOpen = false;
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Help"))
+		{
+
+			if (ImGui::MenuItem("About")) {}
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("Close", NULL, false, isOpen != NULL))
+				*isOpen = false;
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
+
+	if (lveWindowStep == LVE_WINDOW_STEP_CHOOSE_PROJECT) {
+		renderChooseProject();
+	} else if (lveWindowStep == LVE_WINDOW_STEP_APP) {
+		renderApp();
+	}
+
+	ImGui::End();
+
+	ImGui::Render();
+	ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer, 0);
+	ImGui::EndFrame();
+}
+
+void lve::UserInterface::renderChooseProject(){
+
+	{
+		ImGui::Begin("choose a project");
+		ImGui::Text("todo project selection/creation");
+		if (ImGui::Button("test", ImVec2(200, 100))) {
+			lveWindowStep = LVE_WINDOW_STEP_APP;
+		}
+		ImGui::End();
+	}
+}
+
+void lve::UserInterface::renderApp(){
+
+	{
+		ImGui::Begin("Project explorer");
+		ImGui::Text("todo project tree");
+		ImGui::End();
+	}
 
 	{
 		static float f = 0.0f;
 		static int counter = 0;
 
-		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		ImGui::Begin("Properties");                          // Create a window called "Hello, world!" and append into it.
 
 		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
 
@@ -136,37 +192,44 @@ void lve::UserInterface::render(VkCommandBuffer& commandBuffer) {
 	}
 
 	{
-		ImGui::Begin("scene");
-		ImGui::Text("this is a test");
-		ImGui::End();
-	}
-	{
-		ImGui::Begin("folder");
+		ImGui::Begin("Folder");
 		ImGui::Text("this is a test folder");
 		ImGui::End();
 	}
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("Options"))
-        {
+}
 
-            if (ImGui::MenuItem("Flag: NoSplit", "", (dockspace_flags & ImGuiDockNodeFlags_NoSplit) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoSplit; }
-            if (ImGui::MenuItem("Flag: NoResize", "", (dockspace_flags & ImGuiDockNodeFlags_NoResize) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoResize; }
-            if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (dockspace_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode; }
-            if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (dockspace_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0)) { dockspace_flags ^= ImGuiDockNodeFlags_AutoHideTabBar; }
-            ImGui::Separator();
+std::string lve::UserInterface::OpenFile(const char* filter)
+{
+	OPENFILENAMEA ofn;
+	CHAR szFile[260] = { 0 };
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = glfwGetWin32Window(window.getGLFWwindow());
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = filter;
+	ofn.nFilterIndex = 1;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+	if (GetOpenFileNameA(&ofn) == TRUE) {
+		return ofn.lpstrFile;
+	}
+	return std::string();
+}
 
-            if (ImGui::MenuItem("Close", NULL, false, isOpen != NULL))
-                *isOpen = false;
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndMenuBar();
-    }
-
-    ImGui::End();
-
-	ImGui::Render();
-	ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer, 0);
-	ImGui::EndFrame();
+std::string lve::UserInterface::SaveFile(const char* filter)
+{
+	OPENFILENAMEA ofn;
+	CHAR szFile[260] = { 0 };
+	ZeroMemory(&ofn, sizeof(OPENFILENAME));
+	ofn.lStructSize = sizeof(OPENFILENAME);
+	ofn.hwndOwner = glfwGetWin32Window(window.getGLFWwindow());
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = filter;
+	ofn.nFilterIndex = 1;
+	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
+	if (GetSaveFileNameA(&ofn) == TRUE) {
+		return ofn.lpstrFile;
+	}
+	return std::string();
 }

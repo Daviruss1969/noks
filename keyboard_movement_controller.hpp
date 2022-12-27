@@ -20,10 +20,9 @@ namespace lve {
 		};
 
 		void moveInPlaneXZ(GLFWwindow* window, float dt, LveGameObject& gameObject);
-		static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 
 		KeyMappings keys{};
 		float moveSpeed{ 3.f };
-		float lookSpeed{ 1.5f };
+		float lookSpeed{ 1.f };
 	};
 }  // namespace lve

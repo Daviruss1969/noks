@@ -31,7 +31,7 @@ namespace lve {
 	private:
 		void loadGameObjects();
 
-		LveWindow lveWindow{ WIDTH, HEIGHT, "My engine" };
+		LveWindow lveWindow{ WIDTH, HEIGHT, "Noks" };
 		LveDevice lveDevice{ lveWindow };
 		LveRenderer lveRenderer{ lveWindow, lveDevice };
 

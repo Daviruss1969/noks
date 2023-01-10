@@ -6,7 +6,7 @@
 #include "lve_window.hpp"
 #include "lve_device.hpp"
 #include "lve_renderer.hpp"
-#include "first_app.hpp"
+#include "lve_io_manager.hpp"
 
 // libs
 #include <glm/glm.hpp>
@@ -53,15 +53,18 @@ namespace lve {
 		void renderApp();
 
 		std::string OpenFile(const char* filter);
-		std::string SaveFile(const char* filter);
+		std::string SaveFile(const char* filter, std::string defaultName);
 
 		LveWindow& window;
 		LveDevice& device;
 		LveRenderer& renderer;
+		LveIoManager ioManager;
 		LveWindowStep lveWindowStep{ LVE_WINDOW_STEP_CHOOSE_PROJECT };
 		LveInterfaceEvents lveInterfaceEvents{ LVE_NULL };
 
 		VkDescriptorPool ImGuiDescriptorPool;
+
+		std::vector<lve::GameObjectPath> test;
 
 		ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;

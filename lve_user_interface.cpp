@@ -1,6 +1,7 @@
 #include "lve_user_interface.hpp"
 
 #include <stdexcept>
+#include <iostream>
 
 namespace lve {
 	UserInterface::UserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer) : window(window), device(device), renderer(renderer) {
@@ -115,11 +116,23 @@ namespace lve {
 		if (ImGui::BeginMenuBar()) {
 			if (ImGui::BeginMenu("File"))
 			{
-				if (ImGui::MenuItem("New")) { lveWindowStep = LVE_WINDOW_STEP_APP; lveInterfaceEvents = LVE_INTERFACE_EVENT_NEW_PROJECT; }
+				if (ImGui::MenuItem("New")) { 
+					std::string saveProjectPath = SaveFile("", "config.noks");
+					std::cout << saveProjectPath << std::endl;
+					if (saveProjectPath.length() > 0) {
+						ioManager.saveProjectAs(saveProjectPath);
+					}
+					lveWindowStep = LVE_WINDOW_STEP_APP;
+					lveInterfaceEvents = LVE_INTERFACE_EVENT_NEW_PROJECT;
+				}
 				if (ImGui::MenuItem("Open")) { std::string test = OpenFile("Image file (*.png)\0*.png\0"); }
-				if (ImGui::MenuItem("Create")) { std::string test = SaveFile(""); }
-				if (ImGui::MenuItem("Save")) {}
-				if (ImGui::MenuItem("Save As")) {}
+				if (ImGui::MenuItem("Save")) { test = ioManager.updateObjectsPath(); }
+				if (ImGui::MenuItem("Save As")) {
+					std::string saveProjectPath = SaveFile("", "config.noks");
+					if (saveProjectPath.length() > 0) {
+						ioManager.saveProjectAs(saveProjectPath);
+					}
+				}
 				ImGui::Separator();
 
 				if (ImGui::MenuItem("Close", NULL, false, isOpen != NULL))
@@ -203,7 +216,14 @@ namespace lve {
 
 		{
 			ImGui::Begin("Assets");
-			ImGui::Text("this is a test folder");
+			for (const auto& tes : test) {
+				if (tes.isDirectory) {
+					ImGui::Text("this is a test directory");
+				}
+				else {
+					ImGui::Text("this is a test file");
+				}
+			}
 			ImGui::End();
 		}
 	}
@@ -226,10 +246,13 @@ namespace lve {
 		return std::string();
 	}
 
-	std::string UserInterface::SaveFile(const char* filter)
+	std::string UserInterface::SaveFile(const char* filter, std::string defaultName)
 	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
+		for (int i = 0; i < defaultName.length(); i++) {
+			szFile[i] = defaultName.at(i);
+		}
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
 		ofn.hwndOwner = glfwGetWin32Window(window.getGLFWwindow());

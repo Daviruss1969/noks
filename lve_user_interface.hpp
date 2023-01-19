@@ -45,6 +45,8 @@ namespace lve {
 
 		const LveWindowStep getWindowStep() const { return lveWindowStep; }
 
+		const std::string getgameObjectToAdd() const { return gameObjectToAdd; }
+
 		LveInterfaceEvents* render(VkCommandBuffer& commandBuffer);
 	private:
 		void createImGuiDescriptorPool();
@@ -65,6 +67,7 @@ namespace lve {
 		VkDescriptorPool ImGuiDescriptorPool;
 
 		std::vector<lve::GameObjectPath> gameObjectsPaths;
+		std::string gameObjectToAdd = "";
 
 		ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;

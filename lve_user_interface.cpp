@@ -210,6 +210,7 @@ namespace lve {
 		{
 			ImGui::Begin("Assets");
 			bool isUpdatePath = false;
+			bool isAddObject = false;
 			for (const auto& gameObjectPath : gameObjectsPaths) {
 				ImGui::SameLine();
 				if (gameObjectPath.isDirectory) {
@@ -222,7 +223,8 @@ namespace lve {
 				}
 				else {
 					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
-
+						gameObjectToAdd = gameObjectPath.path;
+						lveInterfaceEvents = LVE_INTERFACE_EVENT_ADD_COMPONENT;
 					}
 				}
 			}

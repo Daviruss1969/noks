@@ -141,7 +141,7 @@ namespace lve {
 				}
 				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_COMPONENT) {
 					TransformComponent transform{};
-					addGameObjects("models/girl.obj", transform);
+					addGameObjects(userInterface.getgameObjectToAdd(), transform);
 					*interfaceEvents = LVE_NULL;
 				}
 				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_POINTLIGHT) {

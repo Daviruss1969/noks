@@ -13,6 +13,7 @@
 namespace lve{
 	struct GameObjectPath {
 		std::string path;
+		std::string name;
 		bool isDirectory;
 	};
 

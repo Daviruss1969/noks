@@ -45,6 +45,7 @@ namespace lve {
 			GameObjectPath gameObjectPath;
 			gameObjectPath.isDirectory = entry.is_directory();
 			gameObjectPath.path = entry.path().string();
+			gameObjectPath.name = entry.path().filename().string();
 			std::cout << entry << std::endl;
 			gameObjectsPaths.push_back(gameObjectPath);
 		}

@@ -49,14 +49,12 @@ namespace lve {
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
-		// ImGui::StyleColorsClassic();
 
 		createImGuiDescriptorPool();
+
 
 		ImGui_ImplGlfw_InitForVulkan(window.getGLFWwindow(), true);
 		ImGui_ImplVulkan_InitInfo init_info = {};
@@ -91,11 +89,6 @@ namespace lve {
 		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
 		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
 
-		// Important: note that we proceed even if Begin() returns false (aka window is collapsed).
-		// This is because we want to keep our DockSpace() active. If a DockSpace() is inactive,
-		// all active windows docked into it will lose their parent and become undocked.
-		// We cannot preserve the docking relationship between an active window and an inactive docking, otherwise
-		// any change of dockspace/settings would lead to windows being stuck in limbo and never being visible.
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 
 		ImGui_ImplVulkan_NewFrame();
@@ -126,7 +119,7 @@ namespace lve {
 					lveInterfaceEvents = LVE_INTERFACE_EVENT_NEW_PROJECT;
 				}
 				if (ImGui::MenuItem("Open")) { std::string test = OpenFile("Image file (*.png)\0*.png\0"); }
-				if (ImGui::MenuItem("Save")) { test = ioManager.updateObjectsPath(); }
+				if (ImGui::MenuItem("Save")) { gameObjectsPaths = ioManager.updateObjectsPath(); }
 				if (ImGui::MenuItem("Save As")) {
 					std::string saveProjectPath = SaveFile("", "config.noks");
 					if (saveProjectPath.length() > 0) {
@@ -216,12 +209,19 @@ namespace lve {
 
 		{
 			ImGui::Begin("Assets");
-			for (const auto& tes : test) {
-				if (tes.isDirectory) {
-					ImGui::Text("this is a test directory");
+			for (const auto& gameObjectPath : gameObjectsPaths) {
+				ImGui::SameLine();
+				if (gameObjectPath.isDirectory) {
+					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.97f, 0.84f, 0.46f, 1.f));
+					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
+
+					}
+					ImGui::PopStyleColor();
 				}
 				else {
-					ImGui::Text("this is a test file");
+					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
+
+					}
 				}
 			}
 			ImGui::End();

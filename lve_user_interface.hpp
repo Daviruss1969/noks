@@ -64,7 +64,7 @@ namespace lve {
 
 		VkDescriptorPool ImGuiDescriptorPool;
 
-		std::vector<lve::GameObjectPath> test;
+		std::vector<lve::GameObjectPath> gameObjectsPaths;
 
 		ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;
 		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;

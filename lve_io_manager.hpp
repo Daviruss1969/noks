@@ -22,6 +22,8 @@ namespace lve{
 		LveIoManager();
 		~LveIoManager();
 
+		void setCurrentProjectPath(std::string path) { currentProjectPath = path; }
+
 		void saveProjectAs(std::string path/*, const LveDataToSave& dataToSave*/);
 		std::vector<lve::GameObjectPath> updateObjectsPath();
 

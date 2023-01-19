@@ -209,12 +209,14 @@ namespace lve {
 
 		{
 			ImGui::Begin("Assets");
+			bool isUpdatePath = false;
 			for (const auto& gameObjectPath : gameObjectsPaths) {
 				ImGui::SameLine();
 				if (gameObjectPath.isDirectory) {
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.97f, 0.84f, 0.46f, 1.f));
 					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
-
+						ioManager.setCurrentProjectPath(gameObjectPath.path);
+						isUpdatePath = true;
 					}
 					ImGui::PopStyleColor();
 				}
@@ -223,6 +225,9 @@ namespace lve {
 
 					}
 				}
+			}
+			if (isUpdatePath) {
+				gameObjectsPaths = ioManager.updateObjectsPath();
 			}
 			ImGui::End();
 		}

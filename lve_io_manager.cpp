@@ -1,4 +1,4 @@
-#include "lve_io_manager.hpp"
+﻿#include "lve_io_manager.hpp"
 #include <iostream>
 
 namespace lve {
@@ -41,13 +41,21 @@ namespace lve {
 	std::vector<lve::GameObjectPath> LveIoManager::updateObjectsPath() {
 		gameObjectsPaths.clear();
 		std::cout << "avant" << std::endl;
+		GameObjectPath gameObjectPath;
+		gameObjectPath.isDirectory = true;
+		gameObjectPath.name = "..";
+		gameObjectPath.path = std::filesystem::path(currentProjectPath).parent_path().string();
+		std::cout << "hehehehea ;" << gameObjectPath.path << std::endl;
+		gameObjectsPaths.push_back(gameObjectPath);
 		for (const auto& entry : std::filesystem::directory_iterator(currentProjectPath)) {
 			GameObjectPath gameObjectPath;
-			gameObjectPath.isDirectory = entry.is_directory();
-			gameObjectPath.path = entry.path().string();
-			gameObjectPath.name = entry.path().filename().string();
-			std::cout << entry << std::endl;
-			gameObjectsPaths.push_back(gameObjectPath);
+			if (entry.is_directory() || entry.path().extension().string() == ".obj") {
+				gameObjectPath.isDirectory = entry.is_directory();
+				gameObjectPath.path = entry.path().string();
+				gameObjectPath.name = entry.path().filename().string();
+				std::cout << entry << std::endl;
+				gameObjectsPaths.push_back(gameObjectPath);
+			}
 		}
 
 		return gameObjectsPaths;

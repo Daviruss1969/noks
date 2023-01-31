@@ -117,14 +117,20 @@ namespace lve {
 					}
 					lveWindowStep = LVE_WINDOW_STEP_APP;
 					lveInterfaceEvents = LVE_INTERFACE_EVENT_NEW_PROJECT;
+					gameObjectsPaths = ioManager.updateObjectsPath();
 				}
-				if (ImGui::MenuItem("Open")) { std::string test = OpenFile("Image file (*.png)\0*.png\0"); }
-				if (ImGui::MenuItem("Save")) { gameObjectsPaths = ioManager.updateObjectsPath(); }
+
+				if (ImGui::MenuItem("Open")) { 
+					std::string test = OpenFile("Noks project file (*.noks)\0*.noks\0");
+					// todo ajouter la lecture de fichier noks
+				}
+
+				if (ImGui::MenuItem("Save")) { 
+					// todo ajouter l'écriture de fichier noks
+				}
+
 				if (ImGui::MenuItem("Save As")) {
-					std::string saveProjectPath = SaveFile("", "config.noks");
-					if (saveProjectPath.length() > 0) {
-						ioManager.saveProjectAs(saveProjectPath);
-					}
+					// todo ajouter la copy de fichier noks
 				}
 				ImGui::Separator();
 
@@ -213,6 +219,7 @@ namespace lve {
 			bool isAddObject = false;
 			for (const auto& gameObjectPath : gameObjectsPaths) {
 				ImGui::SameLine();
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(10, 10, 10, 255));
 				if (gameObjectPath.isDirectory) {
 					ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.97f, 0.84f, 0.46f, 1.f));
 					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
@@ -227,6 +234,7 @@ namespace lve {
 						lveInterfaceEvents = LVE_INTERFACE_EVENT_ADD_COMPONENT;
 					}
 				}
+				ImGui::PopStyleColor();
 			}
 			if (isUpdatePath) {
 				gameObjectsPaths = ioManager.updateObjectsPath();

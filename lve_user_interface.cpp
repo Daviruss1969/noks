@@ -172,10 +172,6 @@ namespace lve {
 
 		{
 			ImGui::Begin("choose a project");
-			ImGui::Text("todo project selection/creation");
-			if (ImGui::Button("test", ImVec2(200, 100))) {
-				lveWindowStep = LVE_WINDOW_STEP_APP;
-			}
 			ImGui::End();
 		}
 	}

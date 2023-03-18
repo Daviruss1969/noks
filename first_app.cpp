@@ -66,7 +66,6 @@ namespace lve {
 			lveDevice,
 			lveRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
-		std::cout << "apel" << std::endl;
 		UserInterface userInterface = UserInterface(lveWindow, lveDevice, lveRenderer);
 		LveCamera camera{};
 

@@ -111,7 +111,6 @@ namespace lve {
 			{
 				if (ImGui::MenuItem("New")) { 
 					std::string saveProjectPath = SaveFile("", "config.noks");
-					std::cout << saveProjectPath << std::endl;
 					if (saveProjectPath.length() > 0) {
 						ioManager.saveProjectAs(saveProjectPath);
 					}

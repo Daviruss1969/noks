@@ -37,7 +37,7 @@
 <h3 align="center">Noks</h3>
 
   <p align="center">
-    Noks is an open-source, cross-platform game engine written in modern C++17.
+    Noks is an open-source, cross-platform game engine written in modern C++17 with the Vulkan API.
     <br />
     <a href="https://github.com/Daviruss1969/noks"><strong>Explore the docs »</strong></a>
     <br />
@@ -83,7 +83,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![alt text](https://github.com/Daviruss1969/noks/blob/master/ressources/images/product-screenshot.png)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/Daviruss1969/noks/blob/master/ressources/images/product-screenshot.png)
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
 

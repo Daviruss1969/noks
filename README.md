@@ -225,7 +225,7 @@ Project Link: [https://github.com/Daviruss1969/noks](https://github.com/Daviruss
 [license-shield]: https://img.shields.io/github/license/Daviruss1969/noks.svg?style=for-the-badge
 [license-url]: https://github.com/Daviruss1969/noks/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/lukas-loiodice-648541221/
 [product-screenshot]: images/screenshot.png
 [Vulkan]: https://www.vulkan.org/user/themes/vulkan/images/logo/vulkan-logo.svg
 [Next-url]: https://nextjs.org/

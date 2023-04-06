@@ -148,6 +148,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Project description
 - [ ] Build with CMake
   - [ ] implement CMake
   - [ ] reorganize the project

@@ -94,13 +94,8 @@ Here's goes the project description
 ### Built With
 
 * <img src="https://www.vulkan.org/user/themes/vulkan/images/logo/vulkan-logo.svg"  width="80" height="20">
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* <img src="https://www.glfw.org/img/favicon/favicon-196x196.png"  width="30" height="30"> GLFW
+* <img src="https://www.opengl.org/sdk/libs/GLM/image/logo-mini.png" width="30" height="30"> GLM
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

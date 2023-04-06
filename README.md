@@ -148,12 +148,13 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 ## Roadmap
 
-- Build with CMake
-  - implement CMake
-  - reorganize the project
-- Add skyboxes
-- Object picking
-- Work on shadows
+- [ ] Build with CMake
+  - [ ] implement CMake
+  - [ ] reorganize the project
+  - [ ] getting started todo
+- [ ] Add skyboxes
+- [ ] Object picking
+- [ ] Work on shadows
 
 See the [open issues](https://github.com/Daviruss1969/noks/issues) for a full list of proposed features (and known issues).
 

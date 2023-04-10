@@ -10,13 +10,13 @@
 #include <vector>
 
 namespace lve {
-	class LveRenderer {
+	class NoksRenderer {
 	public:
-		LveRenderer(LveWindow& window, NoksDevice& device);
-		~LveRenderer();
+		NoksRenderer(LveWindow& window, NoksDevice& device);
+		~NoksRenderer();
 
-		LveRenderer(const LveRenderer&) = delete;
-		LveRenderer& operator=(const LveRenderer&) = delete;
+		NoksRenderer(const NoksRenderer&) = delete;
+		NoksRenderer& operator=(const NoksRenderer&) = delete;
 
 		VkRenderPass getSwapChainRenderPass() const { return lveSwapChain->getRenderPass(); }
 		VkFormat getSwapChainFormat() const { return lveSwapChain->getSwapChainImageFormat(); }

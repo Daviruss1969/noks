@@ -33,7 +33,7 @@ namespace lve {
 
 		LveWindow lveWindow{ WIDTH, HEIGHT, "Noks" };
 		NoksDevice noksDevice{ lveWindow };
-		LveRenderer lveRenderer{ lveWindow, noksDevice };
+		NoksRenderer noksRenderer{ lveWindow, noksDevice };
 
 		// note: order of declarations matters
 		std::unique_ptr<NoksDescriptorPool> globalPool{};

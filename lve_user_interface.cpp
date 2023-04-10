@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace lve {
-	NoksUserInterface::NoksUserInterface(LveWindow& window, NoksDevice& device, LveRenderer& renderer) : window(window), device(device), renderer(renderer) {
+	NoksUserInterface::NoksUserInterface(LveWindow& window, NoksDevice& device, NoksRenderer& renderer) : window(window), device(device), renderer(renderer) {
 		init();
 	}
 

@@ -7,15 +7,15 @@
 
 namespace lve {
 
-	LveRenderer::LveRenderer(LveWindow& window, NoksDevice& device)
+	NoksRenderer::NoksRenderer(LveWindow& window, NoksDevice& device)
 		: lveWindow{ window }, noksDevice{ device } {
 		recreateSwapChain();
 		createCommandBuffers();
 	}
 
-	LveRenderer::~LveRenderer() { freeCommandBuffers(); }
+	NoksRenderer::~NoksRenderer() { freeCommandBuffers(); }
 
-	void LveRenderer::recreateSwapChain() {
+	void NoksRenderer::recreateSwapChain() {
 		auto extent = lveWindow.getExtent();
 		while (extent.width == 0 || extent.height == 0) {
 			extent = lveWindow.getExtent();
@@ -36,7 +36,7 @@ namespace lve {
 		}
 	}
 
-	void LveRenderer::createCommandBuffers() {
+	void NoksRenderer::createCommandBuffers() {
 		commandBuffers.resize(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		VkCommandBufferAllocateInfo allocInfo{};
@@ -51,7 +51,7 @@ namespace lve {
 		}
 	}
 
-	void LveRenderer::freeCommandBuffers() {
+	void NoksRenderer::freeCommandBuffers() {
 		vkFreeCommandBuffers(
 			noksDevice.device(),
 			noksDevice.getCommandPool(),
@@ -60,7 +60,7 @@ namespace lve {
 		commandBuffers.clear();
 	}
 
-	VkCommandBuffer LveRenderer::beginFrame() {
+	VkCommandBuffer NoksRenderer::beginFrame() {
 		assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
 		auto result = lveSwapChain->acquireNextImage(&currentImageIndex);
@@ -85,7 +85,7 @@ namespace lve {
 		return commandBuffer;
 	}
 
-	void LveRenderer::endFrame() {
+	void NoksRenderer::endFrame() {
 		assert(isFrameStarted && "Can't call endFrame while frame is not in progress");
 		auto commandBuffer = getCurrentCommandBuffer();
 		if (vkEndCommandBuffer(commandBuffer) != VK_SUCCESS) {
@@ -106,7 +106,7 @@ namespace lve {
 		currentFrameIndex = (currentFrameIndex + 1) % LveSwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
 
-	void LveRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
+	void NoksRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 		assert(isFrameStarted && "Can't call beginSwapChainRenderPass if frame is not in progress");
 		assert(
 			commandBuffer == getCurrentCommandBuffer() &&
@@ -140,7 +140,7 @@ namespace lve {
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 	}
 
-	void LveRenderer::endSwapChainRenderPass(VkCommandBuffer commandBuffer) {
+	void NoksRenderer::endSwapChainRenderPass(VkCommandBuffer commandBuffer) {
 		assert(isFrameStarted && "Can't call endSwapChainRenderPass if frame is not in progress");
 		assert(
 			commandBuffer == getCurrentCommandBuffer() &&
@@ -148,7 +148,7 @@ namespace lve {
 		vkCmdEndRenderPass(commandBuffer);
 	}
 
-	VkCommandBuffer LveRenderer::beginSingleTimeCommand(){
+	VkCommandBuffer NoksRenderer::beginSingleTimeCommand(){
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
@@ -167,7 +167,7 @@ namespace lve {
 		return commandBuffer;
 	}
 
-	void LveRenderer::endSingleTimeCommand(VkCommandBuffer commandBuffer)
+	void NoksRenderer::endSingleTimeCommand(VkCommandBuffer commandBuffer)
 	{
 		vkEndCommandBuffer(commandBuffer);
 

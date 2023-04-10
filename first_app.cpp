@@ -60,13 +60,13 @@ namespace lve {
 
 		SimpleRenderSystem simpleRenderSystem{
 			noksDevice,
-			lveRenderer.getSwapChainRenderPass(),
+			noksRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
 		PointLightSystem pointLightSystem{
 			noksDevice,
-			lveRenderer.getSwapChainRenderPass(),
+			noksRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
-		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, lveRenderer);
+		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, noksRenderer);
 		LveCamera camera{};
 
 		auto viewerObject = LveGameObject::createGameObject();
@@ -79,14 +79,14 @@ namespace lve {
 		while (!lveWindow.shouldClose()) {
 			glfwPollEvents();
 			if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_CHOOSE_PROJECT) {
-				if (auto commandBuffer = lveRenderer.beginFrame()) {
-					int frameIndex = lveRenderer.getFrameIndex();
-					lveRenderer.beginSwapChainRenderPass(commandBuffer);
+				if (auto commandBuffer = noksRenderer.beginFrame()) {
+					int frameIndex = noksRenderer.getFrameIndex();
+					noksRenderer.beginSwapChainRenderPass(commandBuffer);
 
 					userInterface.render(commandBuffer);
 
-					lveRenderer.endSwapChainRenderPass(commandBuffer);
-					lveRenderer.endFrame();
+					noksRenderer.endSwapChainRenderPass(commandBuffer);
+					noksRenderer.endFrame();
 				}
 			} else if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_APP) {
 				auto newTime = std::chrono::high_resolution_clock::now();
@@ -97,11 +97,11 @@ namespace lve {
 				cameraController.moveInPlaneXZ(lveWindow.getGLFWwindow(), frameTime, viewerObject);
 				camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
-				float aspect = lveRenderer.getAspectRatio();
+				float aspect = noksRenderer.getAspectRatio();
 				camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 100.f);
 
-				if (auto commandBuffer = lveRenderer.beginFrame()) {
-					int frameIndex = lveRenderer.getFrameIndex();
+				if (auto commandBuffer = noksRenderer.beginFrame()) {
+					int frameIndex = noksRenderer.getFrameIndex();
 					FrameInfo frameInfo{
 						frameIndex,
 						frameTime,
@@ -120,15 +120,15 @@ namespace lve {
 					uboBuffers[frameIndex]->flush();
 
 					// render
-					lveRenderer.beginSwapChainRenderPass(commandBuffer);
+					noksRenderer.beginSwapChainRenderPass(commandBuffer);
 
 					// order matter here
 					simpleRenderSystem.renderGameObjects(frameInfo);
 					pointLightSystem.render(frameInfo);
 					interfaceEvents = userInterface.render(frameInfo.commandBuffer);
 
-					lveRenderer.endSwapChainRenderPass(commandBuffer);
-					lveRenderer.endFrame();
+					noksRenderer.endSwapChainRenderPass(commandBuffer);
+					noksRenderer.endFrame();
 				}
 			}
 

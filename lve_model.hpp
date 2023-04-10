@@ -55,11 +55,11 @@ namespace lve {
 
 		LveDevice& lveDevice;
 
-		std::unique_ptr<LveBuffer> vertexBuffer;
+		std::unique_ptr<NoksBuffer> vertexBuffer;
 		uint32_t vertexCount;
 
 		bool hasIndexBuffer = false;
-		std::unique_ptr<LveBuffer> indexBuffer;
+		std::unique_ptr<NoksBuffer> indexBuffer;
 		uint32_t indexCount;
 	};
 }  // namespace lve

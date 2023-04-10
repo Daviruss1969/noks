@@ -36,7 +36,7 @@ namespace lve {
 		LveRenderer lveRenderer{ lveWindow, lveDevice };
 
 		// note: order of declarations matters
-		std::unique_ptr<LveDescriptorPool> globalPool{};
+		std::unique_ptr<NoksDescriptorPool> globalPool{};
 		LveGameObject::Map gameObjects;
 	};
 }  // namespace lve

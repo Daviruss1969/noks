@@ -4,19 +4,19 @@
 
 namespace lve {
 
-	class LveBuffer {
+	class NoksBuffer {
 	public:
-		LveBuffer(
+		NoksBuffer(
 			LveDevice& device,
 			VkDeviceSize instanceSize,
 			uint32_t instanceCount,
 			VkBufferUsageFlags usageFlags,
 			VkMemoryPropertyFlags memoryPropertyFlags,
 			VkDeviceSize minOffsetAlignment = 1);
-		~LveBuffer();
+		~NoksBuffer();
 
-		LveBuffer(const LveBuffer&) = delete;
-		LveBuffer& operator=(const LveBuffer&) = delete;
+		NoksBuffer(const NoksBuffer&) = delete;
+		NoksBuffer& operator=(const NoksBuffer&) = delete;
 
 		VkResult map(VkDeviceSize size = VK_WHOLE_SIZE, VkDeviceSize offset = 0);
 		void unmap();

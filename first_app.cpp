@@ -24,7 +24,7 @@ namespace lve {
 
 	FirstApp::FirstApp() {
 		globalPool =
-			LveDescriptorPool::Builder(lveDevice)
+			NoksDescriptorPool::Builder(lveDevice)
 			.setMaxSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT)
 			.addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, LveSwapChain::MAX_FRAMES_IN_FLIGHT)
 			.build();
@@ -34,9 +34,9 @@ namespace lve {
 	FirstApp::~FirstApp() {}
 
 	void FirstApp::run() {
-		std::vector<std::unique_ptr<LveBuffer>> uboBuffers(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
+		std::vector<std::unique_ptr<NoksBuffer>> uboBuffers(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
 		for (int i = 0; i < uboBuffers.size(); i++) {
-			uboBuffers[i] = std::make_unique<LveBuffer>(
+			uboBuffers[i] = std::make_unique<NoksBuffer>(
 				lveDevice,
 				sizeof(GlobalUbo),
 				1,
@@ -46,14 +46,14 @@ namespace lve {
 		}
 
 		auto globalSetLayout =
-			LveDescriptorSetLayout::Builder(lveDevice)
+			NoksDescriptorSetLayout::Builder(lveDevice)
 			.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
 			.build();
 
 		std::vector<VkDescriptorSet> globalDescriptorSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
 		for (int i = 0; i < globalDescriptorSets.size(); i++) {
 			auto bufferInfo = uboBuffers[i]->descriptorInfo();
-			LveDescriptorWriter(*globalSetLayout, *globalPool)
+			NoksDescriptorWriter(*globalSetLayout, *globalPool)
 				.writeBuffer(0, &bufferInfo)
 				.build(globalDescriptorSets[i]);
 		}

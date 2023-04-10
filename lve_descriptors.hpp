@@ -9,7 +9,7 @@
 
 namespace lve {
 
-	class LveDescriptorSetLayout {
+	class NoksDescriptorSetLayout {
 	public:
 		class Builder {
 		public:
@@ -20,18 +20,18 @@ namespace lve {
 				VkDescriptorType descriptorType,
 				VkShaderStageFlags stageFlags,
 				uint32_t count = 1);
-			std::unique_ptr<LveDescriptorSetLayout> build() const;
+			std::unique_ptr<NoksDescriptorSetLayout> build() const;
 
 		private:
 			LveDevice& lveDevice;
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings{};
 		};
 
-		LveDescriptorSetLayout(
+		NoksDescriptorSetLayout(
 			LveDevice& lveDevice, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
-		~LveDescriptorSetLayout();
-		LveDescriptorSetLayout(const LveDescriptorSetLayout&) = delete;
-		LveDescriptorSetLayout& operator=(const LveDescriptorSetLayout&) = delete;
+		~NoksDescriptorSetLayout();
+		NoksDescriptorSetLayout(const NoksDescriptorSetLayout&) = delete;
+		NoksDescriptorSetLayout& operator=(const NoksDescriptorSetLayout&) = delete;
 
 		VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
@@ -40,10 +40,10 @@ namespace lve {
 		VkDescriptorSetLayout descriptorSetLayout;
 		std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings;
 
-		friend class LveDescriptorWriter;
+		friend class NoksDescriptorWriter;
 	};
 
-	class LveDescriptorPool {
+	class NoksDescriptorPool {
 	public:
 		class Builder {
 		public:
@@ -52,7 +52,7 @@ namespace lve {
 			Builder& addPoolSize(VkDescriptorType descriptorType, uint32_t count);
 			Builder& setPoolFlags(VkDescriptorPoolCreateFlags flags);
 			Builder& setMaxSets(uint32_t count);
-			std::unique_ptr<LveDescriptorPool> build() const;
+			std::unique_ptr<NoksDescriptorPool> build() const;
 
 		private:
 			LveDevice& lveDevice;
@@ -61,14 +61,14 @@ namespace lve {
 			VkDescriptorPoolCreateFlags poolFlags = 0;
 		};
 
-		LveDescriptorPool(
+		NoksDescriptorPool(
 			LveDevice& lveDevice,
 			uint32_t maxSets,
 			VkDescriptorPoolCreateFlags poolFlags,
 			const std::vector<VkDescriptorPoolSize>& poolSizes);
-		~LveDescriptorPool();
-		LveDescriptorPool(const LveDescriptorPool&) = delete;
-		LveDescriptorPool& operator=(const LveDescriptorPool&) = delete;
+		~NoksDescriptorPool();
+		NoksDescriptorPool(const NoksDescriptorPool&) = delete;
+		NoksDescriptorPool& operator=(const NoksDescriptorPool&) = delete;
 
 		bool allocateDescriptor(
 			const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet& descriptor) const;
@@ -81,22 +81,22 @@ namespace lve {
 		LveDevice& lveDevice;
 		VkDescriptorPool descriptorPool;
 
-		friend class LveDescriptorWriter;
+		friend class NoksDescriptorWriter;
 	};
 
-	class LveDescriptorWriter {
+	class NoksDescriptorWriter {
 	public:
-		LveDescriptorWriter(LveDescriptorSetLayout& setLayout, LveDescriptorPool& pool);
+		NoksDescriptorWriter(NoksDescriptorSetLayout& setLayout, NoksDescriptorPool& pool);
 
-		LveDescriptorWriter& writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferInfo);
-		LveDescriptorWriter& writeImage(uint32_t binding, VkDescriptorImageInfo* imageInfo);
+		NoksDescriptorWriter& writeBuffer(uint32_t binding, VkDescriptorBufferInfo* bufferInfo);
+		NoksDescriptorWriter& writeImage(uint32_t binding, VkDescriptorImageInfo* imageInfo);
 
 		bool build(VkDescriptorSet& set);
 		void overwrite(VkDescriptorSet& set);
 
 	private:
-		LveDescriptorSetLayout& setLayout;
-		LveDescriptorPool& pool;
+		NoksDescriptorSetLayout& setLayout;
+		NoksDescriptorPool& pool;
 		std::vector<VkWriteDescriptorSet> writes;
 	};
 

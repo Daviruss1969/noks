@@ -8,7 +8,7 @@ namespace lve {
 
 	// *************** Descriptor Set Layout Builder *********************
 
-	LveDescriptorSetLayout::Builder& LveDescriptorSetLayout::Builder::addBinding(
+	NoksDescriptorSetLayout::Builder& NoksDescriptorSetLayout::Builder::addBinding(
 		uint32_t binding,
 		VkDescriptorType descriptorType,
 		VkShaderStageFlags stageFlags,
@@ -23,13 +23,13 @@ namespace lve {
 		return *this;
 	}
 
-	std::unique_ptr<LveDescriptorSetLayout> LveDescriptorSetLayout::Builder::build() const {
-		return std::make_unique<LveDescriptorSetLayout>(lveDevice, bindings);
+	std::unique_ptr<NoksDescriptorSetLayout> NoksDescriptorSetLayout::Builder::build() const {
+		return std::make_unique<NoksDescriptorSetLayout>(lveDevice, bindings);
 	}
 
 	// *************** Descriptor Set Layout *********************
 
-	LveDescriptorSetLayout::LveDescriptorSetLayout(
+	NoksDescriptorSetLayout::NoksDescriptorSetLayout(
 		LveDevice& lveDevice, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings)
 		: lveDevice{ lveDevice }, bindings{ bindings } {
 		std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings{};
@@ -51,35 +51,35 @@ namespace lve {
 		}
 	}
 
-	LveDescriptorSetLayout::~LveDescriptorSetLayout() {
+	NoksDescriptorSetLayout::~NoksDescriptorSetLayout() {
 		vkDestroyDescriptorSetLayout(lveDevice.device(), descriptorSetLayout, nullptr);
 	}
 
 	// *************** Descriptor Pool Builder *********************
 
-	LveDescriptorPool::Builder& LveDescriptorPool::Builder::addPoolSize(
+	NoksDescriptorPool::Builder& NoksDescriptorPool::Builder::addPoolSize(
 		VkDescriptorType descriptorType, uint32_t count) {
 		poolSizes.push_back({ descriptorType, count });
 		return *this;
 	}
 
-	LveDescriptorPool::Builder& LveDescriptorPool::Builder::setPoolFlags(
+	NoksDescriptorPool::Builder& NoksDescriptorPool::Builder::setPoolFlags(
 		VkDescriptorPoolCreateFlags flags) {
 		poolFlags = flags;
 		return *this;
 	}
-	LveDescriptorPool::Builder& LveDescriptorPool::Builder::setMaxSets(uint32_t count) {
+	NoksDescriptorPool::Builder& NoksDescriptorPool::Builder::setMaxSets(uint32_t count) {
 		maxSets = count;
 		return *this;
 	}
 
-	std::unique_ptr<LveDescriptorPool> LveDescriptorPool::Builder::build() const {
-		return std::make_unique<LveDescriptorPool>(lveDevice, maxSets, poolFlags, poolSizes);
+	std::unique_ptr<NoksDescriptorPool> NoksDescriptorPool::Builder::build() const {
+		return std::make_unique<NoksDescriptorPool>(lveDevice, maxSets, poolFlags, poolSizes);
 	}
 
 	// *************** Descriptor Pool *********************
 
-	LveDescriptorPool::LveDescriptorPool(
+	NoksDescriptorPool::NoksDescriptorPool(
 		LveDevice& lveDevice,
 		uint32_t maxSets,
 		VkDescriptorPoolCreateFlags poolFlags,
@@ -98,11 +98,11 @@ namespace lve {
 		}
 	}
 
-	LveDescriptorPool::~LveDescriptorPool() {
+	NoksDescriptorPool::~NoksDescriptorPool() {
 		vkDestroyDescriptorPool(lveDevice.device(), descriptorPool, nullptr);
 	}
 
-	bool LveDescriptorPool::allocateDescriptor(
+	bool NoksDescriptorPool::allocateDescriptor(
 		const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet& descriptor) const {
 		VkDescriptorSetAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -118,7 +118,7 @@ namespace lve {
 		return true;
 	}
 
-	void LveDescriptorPool::freeDescriptors(std::vector<VkDescriptorSet>& descriptors) const {
+	void NoksDescriptorPool::freeDescriptors(std::vector<VkDescriptorSet>& descriptors) const {
 		vkFreeDescriptorSets(
 			lveDevice.device(),
 			descriptorPool,
@@ -126,16 +126,16 @@ namespace lve {
 			descriptors.data());
 	}
 
-	void LveDescriptorPool::resetPool() {
+	void NoksDescriptorPool::resetPool() {
 		vkResetDescriptorPool(lveDevice.device(), descriptorPool, 0);
 	}
 
 	// *************** Descriptor Writer *********************
 
-	LveDescriptorWriter::LveDescriptorWriter(LveDescriptorSetLayout& setLayout, LveDescriptorPool& pool)
+	NoksDescriptorWriter::NoksDescriptorWriter(NoksDescriptorSetLayout& setLayout, NoksDescriptorPool& pool)
 		: setLayout{ setLayout }, pool{ pool } {}
 
-	LveDescriptorWriter& LveDescriptorWriter::writeBuffer(
+	NoksDescriptorWriter& NoksDescriptorWriter::writeBuffer(
 		uint32_t binding, VkDescriptorBufferInfo* bufferInfo) {
 		assert(setLayout.bindings.count(binding) == 1 && "Layout does not contain specified binding");
 
@@ -156,7 +156,7 @@ namespace lve {
 		return *this;
 	}
 
-	LveDescriptorWriter& LveDescriptorWriter::writeImage(
+	NoksDescriptorWriter& NoksDescriptorWriter::writeImage(
 		uint32_t binding, VkDescriptorImageInfo* imageInfo) {
 		assert(setLayout.bindings.count(binding) == 1 && "Layout does not contain specified binding");
 
@@ -177,7 +177,7 @@ namespace lve {
 		return *this;
 	}
 
-	bool LveDescriptorWriter::build(VkDescriptorSet& set) {
+	bool NoksDescriptorWriter::build(VkDescriptorSet& set) {
 		bool success = pool.allocateDescriptor(setLayout.getDescriptorSetLayout(), set);
 		if (!success) {
 			return false;
@@ -186,7 +186,7 @@ namespace lve {
 		return true;
 	}
 
-	void LveDescriptorWriter::overwrite(VkDescriptorSet& set) {
+	void NoksDescriptorWriter::overwrite(VkDescriptorSet& set) {
 		for (auto& write : writes) {
 			write.dstSet = set;
 		}

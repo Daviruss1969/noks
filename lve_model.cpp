@@ -46,7 +46,7 @@ namespace lve {
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertexCount;
 		uint32_t vertexSize = sizeof(vertices[0]);
 
-		LveBuffer stagingBuffer{
+		NoksBuffer stagingBuffer{
 			lveDevice,
 			vertexSize,
 			vertexCount,
@@ -57,7 +57,7 @@ namespace lve {
 		stagingBuffer.map();
 		stagingBuffer.writeToBuffer((void*)vertices.data());
 
-		vertexBuffer = std::make_unique<LveBuffer>(
+		vertexBuffer = std::make_unique<NoksBuffer>(
 			lveDevice,
 			vertexSize,
 			vertexCount,
@@ -78,7 +78,7 @@ namespace lve {
 		VkDeviceSize bufferSize = sizeof(indices[0]) * indexCount;
 		uint32_t indexSize = sizeof(indices[0]);
 
-		LveBuffer stagingBuffer{
+		NoksBuffer stagingBuffer{
 			lveDevice,
 			indexSize,
 			indexCount,
@@ -89,7 +89,7 @@ namespace lve {
 		stagingBuffer.map();
 		stagingBuffer.writeToBuffer((void*)indices.data());
 
-		indexBuffer = std::make_unique<LveBuffer>(
+		indexBuffer = std::make_unique<NoksBuffer>(
 			lveDevice,
 			indexSize,
 			indexCount,

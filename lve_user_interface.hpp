@@ -23,31 +23,31 @@
 #include <GLFW/glfw3native.h>
 
 namespace lve {
-	typedef enum LveWindowStep {
-		LVE_WINDOW_STEP_CHOOSE_PROJECT = 0,
-		LVE_WINDOW_STEP_APP = 1
-	} LveWindowStep;
+	typedef enum NoksWindowStep {
+		NOKS_WINDOW_STEP_CHOOSE_PROJECT = 0,
+		NOKS_WINDOW_STEP_APP = 1
+	} NoksWindowStep;
 
-	typedef enum LveInterfaceEvents {
-		LVE_NULL = 0,
-		LVE_INTERFACE_EVENT_NEW_PROJECT = 1,
-		LVE_INTERFACE_EVENT_ADD_COMPONENT = 2,
-		LVE_INTERFACE_EVENT_ADD_POINTLIGHT = 4
-	} LveInterfaceEvents;
+	typedef enum NoksInterfaceEvents {
+		NOKS_NULL = 0,
+		NOKS_INTERFACE_EVENT_NEW_PROJECT = 1,
+		NOKS_INTERFACE_EVENT_ADD_COMPONENT = 2,
+		NOKS_INTERFACE_EVENT_ADD_POINTLIGHT = 4
+	} NoksInterfaceEvents;
 
-	class UserInterface {
+	class NoksUserInterface {
 	public:
-		UserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer);
-		~UserInterface();
+		NoksUserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer);
+		~NoksUserInterface();
 
-		UserInterface(const UserInterface&) = delete;
-		UserInterface& operator=(const UserInterface&) = delete;
+		NoksUserInterface(const NoksUserInterface&) = delete;
+		NoksUserInterface& operator=(const NoksUserInterface&) = delete;
 
-		const LveWindowStep getWindowStep() const { return lveWindowStep; }
+		const NoksWindowStep getWindowStep() const { return windowStep; }
 
 		const std::string getgameObjectToAdd() const { return gameObjectToAdd; }
 
-		LveInterfaceEvents* render(VkCommandBuffer& commandBuffer);
+		NoksInterfaceEvents* render(VkCommandBuffer& commandBuffer);
 	private:
 		void createImGuiDescriptorPool();
 		void init();
@@ -61,8 +61,8 @@ namespace lve {
 		LveDevice& device;
 		LveRenderer& renderer;
 		LveIoManager ioManager;
-		LveWindowStep lveWindowStep{ LVE_WINDOW_STEP_CHOOSE_PROJECT };
-		LveInterfaceEvents lveInterfaceEvents{ LVE_NULL };
+		NoksWindowStep windowStep{ NOKS_WINDOW_STEP_CHOOSE_PROJECT };
+		NoksInterfaceEvents interfaceEvents{ NOKS_NULL };
 
 		VkDescriptorPool ImGuiDescriptorPool;
 

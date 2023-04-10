@@ -4,18 +4,18 @@
 #include <iostream>
 
 namespace lve {
-	UserInterface::UserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer) : window(window), device(device), renderer(renderer) {
+	NoksUserInterface::NoksUserInterface(LveWindow& window, LveDevice& device, LveRenderer& renderer) : window(window), device(device), renderer(renderer) {
 		init();
 	}
 
-	UserInterface::~UserInterface() {
+	NoksUserInterface::~NoksUserInterface() {
 		vkDestroyDescriptorPool(device.device(), ImGuiDescriptorPool, nullptr);
 		ImGui_ImplVulkan_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 	}
 
-	void UserInterface::createImGuiDescriptorPool() {
+	void NoksUserInterface::createImGuiDescriptorPool() {
 		VkDescriptorPoolSize pool_sizes[] =
 		{
 			{ VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
@@ -43,7 +43,7 @@ namespace lve {
 		}
 	}
 
-	void UserInterface::init() {
+	void NoksUserInterface::init() {
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -78,7 +78,7 @@ namespace lve {
 		ImGui_ImplVulkan_DestroyFontUploadObjects();
 	}
 
-	LveInterfaceEvents* UserInterface::render(VkCommandBuffer& commandBuffer) {
+	NoksInterfaceEvents* NoksUserInterface::render(VkCommandBuffer& commandBuffer) {
 
 		const ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -114,8 +114,8 @@ namespace lve {
 					if (saveProjectPath.length() > 0) {
 						ioManager.saveProjectAs(saveProjectPath);
 					}
-					lveWindowStep = LVE_WINDOW_STEP_APP;
-					lveInterfaceEvents = LVE_INTERFACE_EVENT_NEW_PROJECT;
+					windowStep = NOKS_WINDOW_STEP_APP;
+					interfaceEvents = NOKS_INTERFACE_EVENT_NEW_PROJECT;
 					gameObjectsPaths = ioManager.updateObjectsPath();
 				}
 
@@ -151,10 +151,10 @@ namespace lve {
 			ImGui::EndMenuBar();
 		}
 
-		if (lveWindowStep == LVE_WINDOW_STEP_CHOOSE_PROJECT) {
+		if (windowStep == NOKS_WINDOW_STEP_CHOOSE_PROJECT) {
 			renderChooseProject();
 		}
-		else if (lveWindowStep == LVE_WINDOW_STEP_APP) {
+		else if (windowStep == NOKS_WINDOW_STEP_APP) {
 			renderApp();
 		}
 
@@ -164,10 +164,10 @@ namespace lve {
 		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer, 0);
 		ImGui::EndFrame();
 
-		return &lveInterfaceEvents;
+		return &interfaceEvents;
 	}
 
-	void UserInterface::renderChooseProject() {
+	void NoksUserInterface::renderChooseProject() {
 
 		{
 			ImGui::Begin("choose a project");
@@ -175,16 +175,16 @@ namespace lve {
 		}
 	}
 
-	void UserInterface::renderApp() {
+	void NoksUserInterface::renderApp() {
 
 		{
 			ImGui::Begin("Project explorer");
 			ImGui::Text("todo project tree");
 			if (ImGui::Button("addWomen", ImVec2(100, 50))) {
-				lveInterfaceEvents = LVE_INTERFACE_EVENT_ADD_COMPONENT;
+				interfaceEvents = NOKS_INTERFACE_EVENT_ADD_COMPONENT;
 			}
 			if (ImGui::Button("addPointLight", ImVec2(100, 50))) {
-				lveInterfaceEvents = LVE_INTERFACE_EVENT_ADD_POINTLIGHT;
+				interfaceEvents = NOKS_INTERFACE_EVENT_ADD_POINTLIGHT;
 			}
 			ImGui::End();
 		}
@@ -226,7 +226,7 @@ namespace lve {
 				else {
 					if (ImGui::Button(gameObjectPath.name.c_str(), ImVec2(100, 100))) {
 						gameObjectToAdd = gameObjectPath.path;
-						lveInterfaceEvents = LVE_INTERFACE_EVENT_ADD_COMPONENT;
+						interfaceEvents = NOKS_INTERFACE_EVENT_ADD_COMPONENT;
 					}
 				}
 				ImGui::PopStyleColor();
@@ -238,7 +238,7 @@ namespace lve {
 		}
 	}
 
-	std::string UserInterface::OpenFile(const char* filter)
+	std::string NoksUserInterface::OpenFile(const char* filter)
 	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };
@@ -256,7 +256,7 @@ namespace lve {
 		return std::string();
 	}
 
-	std::string UserInterface::SaveFile(const char* filter, std::string defaultName)
+	std::string NoksUserInterface::SaveFile(const char* filter, std::string defaultName)
 	{
 		OPENFILENAMEA ofn;
 		CHAR szFile[260] = { 0 };

@@ -66,7 +66,7 @@ namespace lve {
 			lveDevice,
 			lveRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
-		UserInterface userInterface = UserInterface(lveWindow, lveDevice, lveRenderer);
+		NoksUserInterface userInterface = NoksUserInterface(lveWindow, lveDevice, lveRenderer);
 		LveCamera camera{};
 
 		auto viewerObject = LveGameObject::createGameObject();
@@ -75,10 +75,10 @@ namespace lve {
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
 
-		LveInterfaceEvents* interfaceEvents = nullptr;
+		NoksInterfaceEvents* interfaceEvents = nullptr;
 		while (!lveWindow.shouldClose()) {
 			glfwPollEvents();
-			if (userInterface.getWindowStep() == LVE_WINDOW_STEP_CHOOSE_PROJECT) {
+			if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_CHOOSE_PROJECT) {
 				if (auto commandBuffer = lveRenderer.beginFrame()) {
 					int frameIndex = lveRenderer.getFrameIndex();
 					lveRenderer.beginSwapChainRenderPass(commandBuffer);
@@ -88,7 +88,7 @@ namespace lve {
 					lveRenderer.endSwapChainRenderPass(commandBuffer);
 					lveRenderer.endFrame();
 				}
-			} else if (userInterface.getWindowStep() == LVE_WINDOW_STEP_APP) {
+			} else if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_APP) {
 				auto newTime = std::chrono::high_resolution_clock::now();
 				float frameTime =
 					std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
@@ -134,18 +134,18 @@ namespace lve {
 
 			// check events
 			if (interfaceEvents != nullptr) {
-				if (*interfaceEvents == LVE_INTERFACE_EVENT_NEW_PROJECT) {
+				if (*interfaceEvents == NOKS_INTERFACE_EVENT_NEW_PROJECT) {
 					newProject();
-					*interfaceEvents = LVE_NULL; // reset event flags
+					*interfaceEvents = NOKS_NULL; // reset event flags
 				}
-				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_COMPONENT) {
+				else if (*interfaceEvents == NOKS_INTERFACE_EVENT_ADD_COMPONENT) {
 					TransformComponent transform{};
 					addGameObjects(userInterface.getgameObjectToAdd(), transform);
-					*interfaceEvents = LVE_NULL;
+					*interfaceEvents = NOKS_NULL;
 				}
-				else if (*interfaceEvents == LVE_INTERFACE_EVENT_ADD_POINTLIGHT) {
+				else if (*interfaceEvents == NOKS_INTERFACE_EVENT_ADD_POINTLIGHT) {
 					addPointLight(glm::vec3{1.f, 1.f, 1.f});
-					*interfaceEvents = LVE_NULL;
+					*interfaceEvents = NOKS_NULL;
 				}
 			}
 		}

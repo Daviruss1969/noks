@@ -48,7 +48,7 @@ namespace lve {
 	}
 
 	// class member functions
-	NoksDevice::NoksDevice(LveWindow& window) : window{ window } {
+	NoksDevice::NoksDevice(NoksWindow& window) : window{ window } {
 		createInstance();
 		setupDebugMessenger();
 		createSurface();

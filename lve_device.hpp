@@ -30,7 +30,7 @@ namespace lve {
 		const bool enableValidationLayers = true;
 #endif
 
-		NoksDevice(LveWindow& window);
+		NoksDevice(NoksWindow& window);
 		~NoksDevice();
 
 		// Not copyable or movable
@@ -95,7 +95,7 @@ namespace lve {
 		VkInstance instance;
 		VkDebugUtilsMessengerEXT debugMessenger;
 		VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-		LveWindow& window;
+		NoksWindow& window;
 		VkCommandPool commandPool;
 
 		VkDevice device_;

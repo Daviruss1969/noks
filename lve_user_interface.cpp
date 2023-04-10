@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace lve {
-	NoksUserInterface::NoksUserInterface(LveWindow& window, NoksDevice& device, NoksRenderer& renderer) : window(window), device(device), renderer(renderer) {
+	NoksUserInterface::NoksUserInterface(NoksWindow& window, NoksDevice& device, NoksRenderer& renderer) : window(window), device(device), renderer(renderer) {
 		init();
 	}
 
@@ -64,8 +64,8 @@ namespace lve {
 		init_info.QueueFamily = 1;
 		init_info.Queue = device.graphicsQueue();
 		init_info.DescriptorPool = ImGuiDescriptorPool;
-		init_info.MinImageCount = LveSwapChain::MAX_FRAMES_IN_FLIGHT;
-		init_info.ImageCount = LveSwapChain::MAX_FRAMES_IN_FLIGHT;
+		init_info.MinImageCount = NoksSwapChain::MAX_FRAMES_IN_FLIGHT;
+		init_info.ImageCount = NoksSwapChain::MAX_FRAMES_IN_FLIGHT;
 		if (!ImGui_ImplVulkan_Init(&init_info, renderer.getSwapChainRenderPass())) {
 			throw std::runtime_error("failed to init the user interface");
 		}

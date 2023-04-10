@@ -31,9 +31,9 @@ namespace lve {
 	private:
 		void loadGameObjects();
 
-		LveWindow lveWindow{ WIDTH, HEIGHT, "Noks" };
-		NoksDevice noksDevice{ lveWindow };
-		NoksRenderer noksRenderer{ lveWindow, noksDevice };
+		NoksWindow noksWindow{ WIDTH, HEIGHT, "Noks" };
+		NoksDevice noksDevice{ noksWindow };
+		NoksRenderer noksRenderer{ noksWindow, noksDevice };
 
 		// note: order of declarations matters
 		std::unique_ptr<NoksDescriptorPool> globalPool{};

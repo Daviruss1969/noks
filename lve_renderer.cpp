@@ -7,8 +7,8 @@
 
 namespace lve {
 
-	NoksRenderer::NoksRenderer(LveWindow& window, NoksDevice& device)
-		: lveWindow{ window }, noksDevice{ device } {
+	NoksRenderer::NoksRenderer(NoksWindow& window, NoksDevice& device)
+		: noksWindow{ window }, noksDevice{ device } {
 		recreateSwapChain();
 		createCommandBuffers();
 	}
@@ -16,28 +16,28 @@ namespace lve {
 	NoksRenderer::~NoksRenderer() { freeCommandBuffers(); }
 
 	void NoksRenderer::recreateSwapChain() {
-		auto extent = lveWindow.getExtent();
+		auto extent = noksWindow.getExtent();
 		while (extent.width == 0 || extent.height == 0) {
-			extent = lveWindow.getExtent();
+			extent = noksWindow.getExtent();
 			glfwWaitEvents();
 		}
 		vkDeviceWaitIdle(noksDevice.device());
 
-		if (lveSwapChain == nullptr) {
-			lveSwapChain = std::make_unique<LveSwapChain>(noksDevice, extent);
+		if (noksSwapChain == nullptr) {
+			noksSwapChain = std::make_unique<NoksSwapChain>(noksDevice, extent);
 		}
 		else {
-			std::shared_ptr<LveSwapChain> oldSwapChain = std::move(lveSwapChain);
-			lveSwapChain = std::make_unique<LveSwapChain>(noksDevice, extent, oldSwapChain);
+			std::shared_ptr<NoksSwapChain> oldSwapChain = std::move(noksSwapChain);
+			noksSwapChain = std::make_unique<NoksSwapChain>(noksDevice, extent, oldSwapChain);
 
-			if (!oldSwapChain->compareSwapFormats(*lveSwapChain.get())) {
+			if (!oldSwapChain->compareSwapFormats(*noksSwapChain.get())) {
 				throw std::runtime_error("Swap chain image(or depth) format has changed!");
 			}
 		}
 	}
 
 	void NoksRenderer::createCommandBuffers() {
-		commandBuffers.resize(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
+		commandBuffers.resize(NoksSwapChain::MAX_FRAMES_IN_FLIGHT);
 
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -63,7 +63,7 @@ namespace lve {
 	VkCommandBuffer NoksRenderer::beginFrame() {
 		assert(!isFrameStarted && "Can't call beginFrame while already in progress");
 
-		auto result = lveSwapChain->acquireNextImage(&currentImageIndex);
+		auto result = noksSwapChain->acquireNextImage(&currentImageIndex);
 		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
 			recreateSwapChain();
 			return nullptr;
@@ -92,10 +92,10 @@ namespace lve {
 			throw std::runtime_error("failed to record command buffer!");
 		}
 
-		auto result = lveSwapChain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
+		auto result = noksSwapChain->submitCommandBuffers(&commandBuffer, &currentImageIndex);
 		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR ||
-			lveWindow.wasWindowResized()) {
-			lveWindow.resetWindowResizedFlag();
+			noksWindow.wasWindowResized()) {
+			noksWindow.resetWindowResizedFlag();
 			recreateSwapChain();
 		}
 		else if (result != VK_SUCCESS) {
@@ -103,7 +103,7 @@ namespace lve {
 		}
 
 		isFrameStarted = false;
-		currentFrameIndex = (currentFrameIndex + 1) % LveSwapChain::MAX_FRAMES_IN_FLIGHT;
+		currentFrameIndex = (currentFrameIndex + 1) % NoksSwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
 
 	void NoksRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer) {
@@ -114,11 +114,11 @@ namespace lve {
 
 		VkRenderPassBeginInfo renderPassInfo{};
 		renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-		renderPassInfo.renderPass = lveSwapChain->getRenderPass();
-		renderPassInfo.framebuffer = lveSwapChain->getFrameBuffer(currentImageIndex);
+		renderPassInfo.renderPass = noksSwapChain->getRenderPass();
+		renderPassInfo.framebuffer = noksSwapChain->getFrameBuffer(currentImageIndex);
 
 		renderPassInfo.renderArea.offset = { 0, 0 };
-		renderPassInfo.renderArea.extent = lveSwapChain->getSwapChainExtent();
+		renderPassInfo.renderArea.extent = noksSwapChain->getSwapChainExtent();
 
 		std::array<VkClearValue, 2> clearValues{};
 		clearValues[0].color = { 0.01f, 0.01f, 0.01f, 1.0f };
@@ -131,11 +131,11 @@ namespace lve {
 		VkViewport viewport{};
 		viewport.x = 0.0f;
 		viewport.y = 0.0f;
-		viewport.width = static_cast<float>(lveSwapChain->getSwapChainExtent().width);
-		viewport.height = static_cast<float>(lveSwapChain->getSwapChainExtent().height);
+		viewport.width = static_cast<float>(noksSwapChain->getSwapChainExtent().width);
+		viewport.height = static_cast<float>(noksSwapChain->getSwapChainExtent().height);
 		viewport.minDepth = 0.0f;
 		viewport.maxDepth = 1.0f;
-		VkRect2D scissor{ {0, 0}, lveSwapChain->getSwapChainExtent() };
+		VkRect2D scissor{ {0, 0}, noksSwapChain->getSwapChainExtent() };
 		vkCmdSetViewport(commandBuffer, 0, 1, &viewport);
 		vkCmdSetScissor(commandBuffer, 0, 1, &scissor);
 	}

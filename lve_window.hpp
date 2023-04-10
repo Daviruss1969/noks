@@ -6,13 +6,13 @@
 #include <string>
 namespace lve {
 
-	class LveWindow {
+	class NoksWindow {
 	public:
-		LveWindow(int w, int h, std::string name);
-		~LveWindow();
+		NoksWindow(int w, int h, std::string name);
+		~NoksWindow();
 
-		LveWindow(const LveWindow&) = delete;
-		LveWindow& operator=(const LveWindow&) = delete;
+		NoksWindow(const NoksWindow&) = delete;
+		NoksWindow& operator=(const NoksWindow&) = delete;
 
 		bool shouldClose() { return glfwWindowShouldClose(window); }
 		VkExtent2D getExtent() { return { static_cast<uint32_t>(width), static_cast<uint32_t>(height) }; }

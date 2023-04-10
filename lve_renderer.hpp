@@ -12,15 +12,15 @@
 namespace lve {
 	class NoksRenderer {
 	public:
-		NoksRenderer(LveWindow& window, NoksDevice& device);
+		NoksRenderer(NoksWindow& window, NoksDevice& device);
 		~NoksRenderer();
 
 		NoksRenderer(const NoksRenderer&) = delete;
 		NoksRenderer& operator=(const NoksRenderer&) = delete;
 
-		VkRenderPass getSwapChainRenderPass() const { return lveSwapChain->getRenderPass(); }
-		VkFormat getSwapChainFormat() const { return lveSwapChain->getSwapChainImageFormat(); }
-		float getAspectRatio() const { return lveSwapChain->extentAspectRatio(); }
+		VkRenderPass getSwapChainRenderPass() const { return noksSwapChain->getRenderPass(); }
+		VkFormat getSwapChainFormat() const { return noksSwapChain->getSwapChainImageFormat(); }
+		float getAspectRatio() const { return noksSwapChain->extentAspectRatio(); }
 		bool isFrameInProgress() const { return isFrameStarted; }
 
 		VkCommandBuffer getCurrentCommandBuffer() const {
@@ -45,9 +45,9 @@ namespace lve {
 		void freeCommandBuffers();
 		void recreateSwapChain();
 
-		LveWindow& lveWindow;
+		NoksWindow& noksWindow;
 		NoksDevice& noksDevice;
-		std::unique_ptr<LveSwapChain> lveSwapChain;
+		std::unique_ptr<NoksSwapChain> noksSwapChain;
 		std::vector<VkCommandBuffer> commandBuffers;
 
 		uint32_t currentImageIndex;

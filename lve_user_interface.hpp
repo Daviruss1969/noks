@@ -37,7 +37,7 @@ namespace lve {
 
 	class NoksUserInterface {
 	public:
-		NoksUserInterface(LveWindow& window, NoksDevice& device, NoksRenderer& renderer);
+		NoksUserInterface(NoksWindow& window, NoksDevice& device, NoksRenderer& renderer);
 		~NoksUserInterface();
 
 		NoksUserInterface(const NoksUserInterface&) = delete;
@@ -57,7 +57,7 @@ namespace lve {
 		std::string OpenFile(const char* filter);
 		std::string SaveFile(const char* filter, std::string defaultName);
 
-		LveWindow& window;
+		NoksWindow& window;
 		NoksDevice& device;
 		NoksRenderer& renderer;
 		NoksIoManager ioManager;

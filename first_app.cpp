@@ -25,8 +25,8 @@ namespace lve {
 	FirstApp::FirstApp() {
 		globalPool =
 			NoksDescriptorPool::Builder(noksDevice)
-			.setMaxSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT)
-			.addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, LveSwapChain::MAX_FRAMES_IN_FLIGHT)
+			.setMaxSets(NoksSwapChain::MAX_FRAMES_IN_FLIGHT)
+			.addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, NoksSwapChain::MAX_FRAMES_IN_FLIGHT)
 			.build();
 		loadGameObjects();
 	}
@@ -34,7 +34,7 @@ namespace lve {
 	FirstApp::~FirstApp() {}
 
 	void FirstApp::run() {
-		std::vector<std::unique_ptr<NoksBuffer>> uboBuffers(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
+		std::vector<std::unique_ptr<NoksBuffer>> uboBuffers(NoksSwapChain::MAX_FRAMES_IN_FLIGHT);
 		for (int i = 0; i < uboBuffers.size(); i++) {
 			uboBuffers[i] = std::make_unique<NoksBuffer>(
 				noksDevice,
@@ -50,7 +50,7 @@ namespace lve {
 			.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
 			.build();
 
-		std::vector<VkDescriptorSet> globalDescriptorSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
+		std::vector<VkDescriptorSet> globalDescriptorSets(NoksSwapChain::MAX_FRAMES_IN_FLIGHT);
 		for (int i = 0; i < globalDescriptorSets.size(); i++) {
 			auto bufferInfo = uboBuffers[i]->descriptorInfo();
 			NoksDescriptorWriter(*globalSetLayout, *globalPool)
@@ -66,7 +66,7 @@ namespace lve {
 			noksDevice,
 			noksRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
-		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, noksRenderer);
+		NoksUserInterface userInterface = NoksUserInterface(noksWindow, noksDevice, noksRenderer);
 		NoksCamera camera{};
 
 		auto viewerObject = NoksGameObject::createGameObject();
@@ -76,7 +76,7 @@ namespace lve {
 		auto currentTime = std::chrono::high_resolution_clock::now();
 
 		NoksInterfaceEvents* interfaceEvents = nullptr;
-		while (!lveWindow.shouldClose()) {
+		while (!noksWindow.shouldClose()) {
 			glfwPollEvents();
 			if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_CHOOSE_PROJECT) {
 				if (auto commandBuffer = noksRenderer.beginFrame()) {
@@ -94,7 +94,7 @@ namespace lve {
 					std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
 				currentTime = newTime;
 
-				cameraController.moveInPlaneXZ(lveWindow.getGLFWwindow(), frameTime, viewerObject);
+				cameraController.moveInPlaneXZ(noksWindow.getGLFWwindow(), frameTime, viewerObject);
 				camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
 				float aspect = noksRenderer.getAspectRatio();

@@ -12,18 +12,18 @@
 
 namespace lve {
 
-	class LveSwapChain {
+	class NoksSwapChain {
 	public:
 		static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-		LveSwapChain(NoksDevice& deviceRef, VkExtent2D windowExtent);
-		LveSwapChain(
-			NoksDevice& deviceRef, VkExtent2D windowExtent, std::shared_ptr<LveSwapChain> previous);
+		NoksSwapChain(NoksDevice& deviceRef, VkExtent2D windowExtent);
+		NoksSwapChain(
+			NoksDevice& deviceRef, VkExtent2D windowExtent, std::shared_ptr<NoksSwapChain> previous);
 
-		~LveSwapChain();
+		~NoksSwapChain();
 
-		LveSwapChain(const LveSwapChain&) = delete;
-		LveSwapChain& operator=(const LveSwapChain&) = delete;
+		NoksSwapChain(const NoksSwapChain&) = delete;
+		NoksSwapChain& operator=(const NoksSwapChain&) = delete;
 
 		VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
 		VkRenderPass getRenderPass() { return renderPass; }
@@ -42,7 +42,7 @@ namespace lve {
 		VkResult acquireNextImage(uint32_t* imageIndex);
 		VkResult submitCommandBuffers(const VkCommandBuffer* buffers, uint32_t* imageIndex);
 
-		bool compareSwapFormats(const LveSwapChain& swapChain) const {
+		bool compareSwapFormats(const NoksSwapChain& swapChain) const {
 			return swapChain.swapChainDepthFormat == swapChainDepthFormat &&
 				swapChain.swapChainImageFormat == swapChainImageFormat;
 		}
@@ -80,7 +80,7 @@ namespace lve {
 		VkExtent2D windowExtent;
 
 		VkSwapchainKHR swapChain;
-		std::shared_ptr<LveSwapChain> oldSwapChain;
+		std::shared_ptr<NoksSwapChain> oldSwapChain;
 
 		std::vector<VkSemaphore> imageAvailableSemaphores;
 		std::vector<VkSemaphore> renderFinishedSemaphores;

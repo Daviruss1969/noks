@@ -13,7 +13,7 @@
 #include <vector>
 
 namespace lve {
-	class LveModel {
+	class NoksModel {
 	public:
 		struct Vertex {
 			glm::vec3 position{};
@@ -37,13 +37,13 @@ namespace lve {
 			void loadModel(const std::string& filepath);
 		};
 
-		LveModel(NoksDevice& device, const LveModel::Builder& builder);
-		~LveModel();
+		NoksModel(NoksDevice& device, const NoksModel::Builder& builder);
+		~NoksModel();
 
-		LveModel(const LveModel&) = delete;
-		LveModel& operator=(const LveModel&) = delete;
+		NoksModel(const NoksModel&) = delete;
+		NoksModel& operator=(const NoksModel&) = delete;
 
-		static std::unique_ptr<LveModel> createModelFromFile(
+		static std::unique_ptr<NoksModel> createModelFromFile(
 			NoksDevice& device, const std::string& filepath);
 
 		void bind(VkCommandBuffer commandBuffer);

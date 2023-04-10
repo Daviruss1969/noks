@@ -30,6 +30,6 @@ namespace lve {
 		VkCommandBuffer commandBuffer;
 		NoksCamera& camera;
 		VkDescriptorSet globalDescriptorSet;
-		LveGameObject::Map& gameObjects;
+		NoksGameObject::Map& gameObjects;
 	};
 }  // namespace lve

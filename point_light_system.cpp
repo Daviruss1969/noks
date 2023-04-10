@@ -91,7 +91,7 @@ namespace lve {
 
 	void PointLightSystem::render(FrameInfo& frameInfo) {
 		// sort the light for alpha blending
-		std::map<float, LveGameObject::id_t> sorted;
+		std::map<float, NoksGameObject::id_t> sorted;
 		for (auto& kv : frameInfo.gameObjects) {
 			auto& obj = kv.second;
 			if (obj.pointLight == nullptr) continue;

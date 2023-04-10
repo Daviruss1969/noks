@@ -15,8 +15,8 @@
 
 namespace std {
 	template <>
-	struct hash<lve::LveModel::Vertex> {
-		size_t operator()(lve::LveModel::Vertex const& vertex) const {
+	struct hash<lve::NoksModel::Vertex> {
+		size_t operator()(lve::NoksModel::Vertex const& vertex) const {
 			size_t seed = 0;
 			lve::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
 			return seed;
@@ -26,21 +26,21 @@ namespace std {
 
 namespace lve {
 
-	LveModel::LveModel(NoksDevice& device, const LveModel::Builder& builder) : noksDevice{ device } {
+	NoksModel::NoksModel(NoksDevice& device, const NoksModel::Builder& builder) : noksDevice{ device } {
 		createVertexBuffers(builder.vertices);
 		createIndexBuffers(builder.indices);
 	}
 
-	LveModel::~LveModel() {}
+	NoksModel::~NoksModel() {}
 
-	std::unique_ptr<LveModel> LveModel::createModelFromFile(
+	std::unique_ptr<NoksModel> NoksModel::createModelFromFile(
 		NoksDevice& device, const std::string& filepath) {
 		Builder builder{};
 		builder.loadModel(filepath);
-		return std::make_unique<LveModel>(device, builder);
+		return std::make_unique<NoksModel>(device, builder);
 	}
 
-	void LveModel::createVertexBuffers(const std::vector<Vertex>& vertices) {
+	void NoksModel::createVertexBuffers(const std::vector<Vertex>& vertices) {
 		vertexCount = static_cast<uint32_t>(vertices.size());
 		assert(vertexCount >= 3 && "Vertex count must be at least 3");
 		VkDeviceSize bufferSize = sizeof(vertices[0]) * vertexCount;
@@ -67,7 +67,7 @@ namespace lve {
 		noksDevice.copyBuffer(stagingBuffer.getBuffer(), vertexBuffer->getBuffer(), bufferSize);
 	}
 
-	void LveModel::createIndexBuffers(const std::vector<uint32_t>& indices) {
+	void NoksModel::createIndexBuffers(const std::vector<uint32_t>& indices) {
 		indexCount = static_cast<uint32_t>(indices.size());
 		hasIndexBuffer = indexCount > 0;
 
@@ -99,7 +99,7 @@ namespace lve {
 		noksDevice.copyBuffer(stagingBuffer.getBuffer(), indexBuffer->getBuffer(), bufferSize);
 	}
 
-	void LveModel::draw(VkCommandBuffer commandBuffer) {
+	void NoksModel::draw(VkCommandBuffer commandBuffer) {
 		if (hasIndexBuffer) {
 			vkCmdDrawIndexed(commandBuffer, indexCount, 1, 0, 0, 0);
 		}
@@ -108,7 +108,7 @@ namespace lve {
 		}
 	}
 
-	void LveModel::bind(VkCommandBuffer commandBuffer) {
+	void NoksModel::bind(VkCommandBuffer commandBuffer) {
 		VkBuffer buffers[] = { vertexBuffer->getBuffer() };
 		VkDeviceSize offsets[] = { 0 };
 		vkCmdBindVertexBuffers(commandBuffer, 0, 1, buffers, offsets);
@@ -118,7 +118,7 @@ namespace lve {
 		}
 	}
 
-	std::vector<VkVertexInputBindingDescription> LveModel::Vertex::getBindingDescriptions() {
+	std::vector<VkVertexInputBindingDescription> NoksModel::Vertex::getBindingDescriptions() {
 		std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
 		bindingDescriptions[0].binding = 0;
 		bindingDescriptions[0].stride = sizeof(Vertex);
@@ -126,7 +126,7 @@ namespace lve {
 		return bindingDescriptions;
 	}
 
-	std::vector<VkVertexInputAttributeDescription> LveModel::Vertex::getAttributeDescriptions() {
+	std::vector<VkVertexInputAttributeDescription> NoksModel::Vertex::getAttributeDescriptions() {
 		std::vector<VkVertexInputAttributeDescription> attributeDescriptions{};
 
 		attributeDescriptions.push_back({ 0, 0, VK_FORMAT_R32G32B32_SFLOAT, offsetof(Vertex, position) });
@@ -137,7 +137,7 @@ namespace lve {
 		return attributeDescriptions;
 	}
 
-	void LveModel::Builder::loadModel(const std::string& filepath) {
+	void NoksModel::Builder::loadModel(const std::string& filepath) {
 		tinyobj::attrib_t attrib;
 		std::vector<tinyobj::shape_t> shapes;
 		std::vector<tinyobj::material_t> materials;

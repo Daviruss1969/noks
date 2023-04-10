@@ -201,8 +201,8 @@ namespace lve {
 			static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
 		configInfo.dynamicStateInfo.flags = 0;
 
-		configInfo.bindingDescriptions = LveModel::Vertex::getBindingDescriptions();
-		configInfo.attributeDescriptions = LveModel::Vertex::getAttributeDescriptions();
+		configInfo.bindingDescriptions = NoksModel::Vertex::getBindingDescriptions();
+		configInfo.attributeDescriptions = NoksModel::Vertex::getAttributeDescriptions();
 	}
 
 	void LvePipeline::enableAlphaBlending(PipelineConfigInfo& configInfo) {

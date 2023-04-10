@@ -69,7 +69,7 @@ namespace lve {
 		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, noksRenderer);
 		NoksCamera camera{};
 
-		auto viewerObject = LveGameObject::createGameObject();
+		auto viewerObject = NoksGameObject::createGameObject();
 		viewerObject.transform.translation.z = -2.5f;
 		KeyboardMovementController cameraController{};
 
@@ -162,15 +162,15 @@ namespace lve {
 	}
 
 	void FirstApp::addGameObjects(std::string path, TransformComponent transform) {
-		std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(noksDevice, path);
-		auto object = LveGameObject::createGameObject();
-		object.model = lveModel;
+		std::shared_ptr<NoksModel> noksModel = NoksModel::createModelFromFile(noksDevice, path);
+		auto object = NoksGameObject::createGameObject();
+		object.model = noksModel;
 		object.transform = transform;
 		gameObjects.emplace(object.getId(), std::move(object));
 	}
 
 	void FirstApp::addPointLight(glm::vec3 color) {
-		auto pointLight = LveGameObject::makePointLight(0.2f);
+		auto pointLight = NoksGameObject::makePointLight(0.2f);
 		pointLight.color = color;
 		gameObjects.emplace(pointLight.getId(), std::move(pointLight));
 	}
@@ -178,31 +178,31 @@ namespace lve {
 
 
 	void FirstApp::loadGameObjects() {
-		//std::shared_ptr<LveModel> lveModel =
-		//	LveModel::createModelFromFile(noksDevice, "models/flat_vase.obj");
-		//auto flatVase = LveGameObject::createGameObject();
-		//flatVase.model = lveModel;
+		//std::shared_ptr<NoksModel> noksModel =
+		//	NoksModel::createModelFromFile(noksDevice, "models/flat_vase.obj");
+		//auto flatVase = NoksGameObject::createGameObject();
+		//flatVase.model = noksModel;
 		//flatVase.transform.translation = { -.5f, .5f, 0.f };
 		//flatVase.transform.scale = { 3.f, 1.5f, 3.f };
 		//gameObjects.emplace(flatVase.getId(), std::move(flatVase));
 
-		//lveModel = LveModel::createModelFromFile(noksDevice, "models/smooth_vase.obj");
-		//auto smoothVase = LveGameObject::createGameObject();
-		//smoothVase.model = lveModel;
+		//noksModel = NoksModel::createModelFromFile(noksDevice, "models/smooth_vase.obj");
+		//auto smoothVase = NoksGameObject::createGameObject();
+		//smoothVase.model = noksModel;
 		//smoothVase.transform.translation = { .5f, .5f, 0.f };
 		//smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
 		//gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
-		//lveModel = LveModel::createModelFromFile(noksDevice, "models/girl.obj");
-		//auto girl = LveGameObject::createGameObject();
-		//girl.model = lveModel;
+		//noksModel = NoksModel::createModelFromFile(noksDevice, "models/girl.obj");
+		//auto girl = NoksGameObject::createGameObject();
+		//girl.model = noksModel;
 		//girl.transform.translation.y = .5f;
 		//girl.transform.rotation.x = glm::radians(180.f);
 		//gameObjects.emplace(girl.getId(), std::move(girl));
 
-		//std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(noksDevice, "models/quad.obj");
-		//auto floor = LveGameObject::createGameObject();
-		//floor.model = lveModel;
+		//std::shared_ptr<NoksModel> noksModel = NoksModel::createModelFromFile(noksDevice, "models/quad.obj");
+		//auto floor = NoksGameObject::createGameObject();
+		//floor.model = noksModel;
 		//floor.transform.translation = { 0.f, .5f, 0.f };
 		//floor.transform.scale = { 3.f, 1.f, 3.f };
 		//gameObjects.emplace(floor.getId(), std::move(floor));
@@ -217,7 +217,7 @@ namespace lve {
 		//};
 
 		//for (int i = 0; i < lightColors.size(); i++) {
-		//	auto pointLight = LveGameObject::makePointLight(0.2f);
+		//	auto pointLight = NoksGameObject::makePointLight(0.2f);
 		//	pointLight.color = lightColors[i];
 		//	auto rotateLight = glm::rotate(
 		//		glm::mat4(1.f),

@@ -37,6 +37,6 @@ namespace lve {
 
 		// note: order of declarations matters
 		std::unique_ptr<NoksDescriptorPool> globalPool{};
-		LveGameObject::Map gameObjects;
+		NoksGameObject::Map gameObjects;
 	};
 }  // namespace lve

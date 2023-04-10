@@ -67,7 +67,7 @@ namespace lve {
 			noksRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
 		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, noksRenderer);
-		LveCamera camera{};
+		NoksCamera camera{};
 
 		auto viewerObject = LveGameObject::createGameObject();
 		viewerObject.transform.translation.z = -2.5f;

@@ -7,7 +7,7 @@
 
 namespace lve {
 
-	class LveCamera {
+	class NoksCamera {
 	public:
 		void setOrthographicProjection(
 			float left, float right, float top, float bottom, float near, float far);

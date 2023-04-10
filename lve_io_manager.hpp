@@ -11,26 +11,26 @@
 #include <vector>
 
 namespace lve{
-	struct GameObjectPath {
+	struct NoksGameObjectPath {
 		std::string path;
 		std::string name;
 		bool isDirectory;
 	};
 
-	class LveIoManager{
+	class NoksIoManager{
 	public:
-		LveIoManager();
-		~LveIoManager();
+		NoksIoManager();
+		~NoksIoManager();
 
 		void setCurrentProjectPath(std::string path) { currentProjectPath = path; }
 
 		void saveProjectAs(std::string path/*, const LveDataToSave& dataToSave*/);
-		std::vector<lve::GameObjectPath> updateObjectsPath();
+		std::vector<lve::NoksGameObjectPath> updateObjectsPath();
 
 	private:
 		std::string currentProjectPath = "";
 		std::string directoryAppPath = "";
-		std::vector<lve::GameObjectPath> gameObjectsPaths;
+		std::vector<lve::NoksGameObjectPath> gameObjectsPaths;
 	};
 }
 

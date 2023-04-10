@@ -60,13 +60,13 @@ namespace lve {
 		LveWindow& window;
 		LveDevice& device;
 		LveRenderer& renderer;
-		LveIoManager ioManager;
+		NoksIoManager ioManager;
 		NoksWindowStep windowStep{ NOKS_WINDOW_STEP_CHOOSE_PROJECT };
 		NoksInterfaceEvents interfaceEvents{ NOKS_NULL };
 
 		VkDescriptorPool ImGuiDescriptorPool;
 
-		std::vector<lve::GameObjectPath> gameObjectsPaths;
+		std::vector<lve::NoksGameObjectPath> gameObjectsPaths;
 		std::string gameObjectToAdd = "";
 
 		ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;

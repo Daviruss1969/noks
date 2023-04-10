@@ -171,6 +171,9 @@
     <ClInclude Include="lve_io_manager.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="object_picking_system.hpp">
+      <Filter>Fichiers d%27en-tête\systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\simple_shader.vert">
@@ -186,6 +189,12 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="shaders\point_light.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\object_picking.frag">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="shaders\object_picking.vert">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

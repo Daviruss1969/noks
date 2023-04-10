@@ -55,13 +55,13 @@ namespace lve {
 		assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
 
 		PipelineConfigInfo pipelineConfig{};
-		LvePipeline::defaultPipelineConfigInfo(pipelineConfig);
-		LvePipeline::enableAlphaBlending(pipelineConfig);
+		NoksPipeline::defaultPipelineConfigInfo(pipelineConfig);
+		NoksPipeline::enableAlphaBlending(pipelineConfig);
 		pipelineConfig.attributeDescriptions.clear();
 		pipelineConfig.bindingDescriptions.clear();
 		pipelineConfig.renderPass = renderPass;
 		pipelineConfig.pipelineLayout = pipelineLayout;
-		lvePipeline = std::make_unique<LvePipeline>(
+		noksPipeline = std::make_unique<NoksPipeline>(
 			noksDevice,
 			"shaders/point_light.vert.spv",
 			"shaders/point_light.frag.spv",
@@ -103,7 +103,7 @@ namespace lve {
 		}
 
 
-		lvePipeline->bind(frameInfo.commandBuffer);
+		noksPipeline->bind(frameInfo.commandBuffer);
 
 		vkCmdBindDescriptorSets(
 			frameInfo.commandBuffer,

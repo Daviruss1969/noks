@@ -29,17 +29,17 @@ namespace lve {
 		uint32_t subpass = 0;
 	};
 
-	class LvePipeline {
+	class NoksPipeline {
 	public:
-		LvePipeline(
+		NoksPipeline(
 			NoksDevice& device,
 			const std::string& vertFilepath,
 			const std::string& fragFilepath,
 			const PipelineConfigInfo& configInfo);
-		~LvePipeline();
+		~NoksPipeline();
 
-		LvePipeline(const LvePipeline&) = delete;
-		LvePipeline& operator=(const LvePipeline&) = delete;
+		NoksPipeline(const NoksPipeline&) = delete;
+		NoksPipeline& operator=(const NoksPipeline&) = delete;
 
 		void bind(VkCommandBuffer commandBuffer);
 

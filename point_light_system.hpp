@@ -29,7 +29,7 @@ namespace lve {
 
 		NoksDevice& noksDevice;
 
-		std::unique_ptr<LvePipeline> lvePipeline;
+		std::unique_ptr<NoksPipeline> noksPipeline;
 		VkPipelineLayout pipelineLayout;
 	};
 }  // namespace lve

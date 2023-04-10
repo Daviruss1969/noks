@@ -24,7 +24,7 @@ namespace lve{
 
 		void setCurrentProjectPath(std::string path) { currentProjectPath = path; }
 
-		void saveProjectAs(std::string path/*, const LveDataToSave& dataToSave*/);
+		void saveProjectAs(std::string path/*, const NoksDataToSave& dataToSave*/);
 		std::vector<lve::NoksGameObjectPath> updateObjectsPath();
 
 	private:

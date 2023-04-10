@@ -9,7 +9,7 @@
 #include <stdexcept>
 namespace lve {
 
-	LvePipeline::LvePipeline(
+	NoksPipeline::NoksPipeline(
 		NoksDevice& device,
 		const std::string& vertFilepath,
 		const std::string& fragFilepath,
@@ -18,13 +18,13 @@ namespace lve {
 		createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
 	}
 
-	LvePipeline::~LvePipeline() {
+	NoksPipeline::~NoksPipeline() {
 		vkDestroyShaderModule(noksDevice.device(), vertShaderModule, nullptr);
 		vkDestroyShaderModule(noksDevice.device(), fragShaderModule, nullptr);
 		vkDestroyPipeline(noksDevice.device(), graphicsPipeline, nullptr);
 	}
 
-	std::vector<char> LvePipeline::readFile(const std::string& filepath) {
+	std::vector<char> NoksPipeline::readFile(const std::string& filepath) {
 		std::string enginePath = filepath;
 		std::ifstream file{ enginePath, std::ios::ate | std::ios::binary };
 
@@ -42,7 +42,7 @@ namespace lve {
 		return buffer;
 	}
 
-	void LvePipeline::createGraphicsPipeline(
+	void NoksPipeline::createGraphicsPipeline(
 		const std::string& vertFilepath,
 		const std::string& fragFilepath,
 		const PipelineConfigInfo& configInfo) {
@@ -116,7 +116,7 @@ namespace lve {
 		}
 	}
 
-	void LvePipeline::createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule) {
+	void NoksPipeline::createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule) {
 		VkShaderModuleCreateInfo createInfo{};
 		createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 		createInfo.codeSize = code.size();
@@ -127,11 +127,11 @@ namespace lve {
 		}
 	}
 
-	void LvePipeline::bind(VkCommandBuffer commandBuffer) {
+	void NoksPipeline::bind(VkCommandBuffer commandBuffer) {
 		vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
 	}
 
-	void LvePipeline::defaultPipelineConfigInfo(PipelineConfigInfo& configInfo) {
+	void NoksPipeline::defaultPipelineConfigInfo(PipelineConfigInfo& configInfo) {
 		configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
 		configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
 		configInfo.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
@@ -205,7 +205,7 @@ namespace lve {
 		configInfo.attributeDescriptions = NoksModel::Vertex::getAttributeDescriptions();
 	}
 
-	void LvePipeline::enableAlphaBlending(PipelineConfigInfo& configInfo) {
+	void NoksPipeline::enableAlphaBlending(PipelineConfigInfo& configInfo) {
 		configInfo.colorBlendAttachment.blendEnable = VK_TRUE;
 		configInfo.colorBlendAttachment.colorWriteMask =
 			VK_COLOR_COMPONENT_R_BIT | VK_COLOR_COMPONENT_G_BIT | VK_COLOR_COMPONENT_B_BIT |

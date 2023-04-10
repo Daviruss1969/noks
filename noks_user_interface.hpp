@@ -3,10 +3,10 @@
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
-#include "lve_window.hpp"
-#include "lve_device.hpp"
-#include "lve_renderer.hpp"
-#include "lve_io_manager.hpp"
+#include "noks_window.hpp"
+#include "noks_device.hpp"
+#include "noks_renderer.hpp"
+#include "noks_io_manager.hpp"
 
 // libs
 #include <glm/glm.hpp>
@@ -22,7 +22,7 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
 
-namespace lve {
+namespace noks {
 	typedef enum NoksWindowStep {
 		NOKS_WINDOW_STEP_CHOOSE_PROJECT = 0,
 		NOKS_WINDOW_STEP_APP = 1
@@ -66,7 +66,7 @@ namespace lve {
 
 		VkDescriptorPool ImGuiDescriptorPool;
 
-		std::vector<lve::NoksGameObjectPath> gameObjectsPaths;
+		std::vector<noks::NoksGameObjectPath> gameObjectsPaths;
 		std::string gameObjectToAdd = "";
 
 		ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None | ImGuiDockNodeFlags_PassthruCentralNode;

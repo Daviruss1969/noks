@@ -1,13 +1,13 @@
-#include "lve_pipeline.hpp"
+#include "noks_pipeline.hpp"
 
-#include "lve_model.hpp"
+#include "noks_model.hpp"
 
 // std
 #include <cassert>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-namespace lve {
+namespace noks {
 
 	NoksPipeline::NoksPipeline(
 		NoksDevice& device,
@@ -218,4 +218,4 @@ namespace lve {
 		configInfo.colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;
 	}
 
-}  // namespace lve
+}  // namespace noks

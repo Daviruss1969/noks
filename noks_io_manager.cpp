@@ -1,16 +1,16 @@
-﻿#include "lve_io_manager.hpp"
+﻿#include "noks_io_manager.hpp"
 #include <iostream>
 
-namespace lve {
-	lve::NoksIoManager::NoksIoManager() {
+namespace noks {
+	noks::NoksIoManager::NoksIoManager() {
 		directoryAppPath = std::filesystem::current_path().string();
 	}
 
-	lve::NoksIoManager::~NoksIoManager(){
+	noks::NoksIoManager::~NoksIoManager(){
 
 	}
 
-	void lve::NoksIoManager::saveProjectAs(std::string path/*, const LveDataToSave& dataToSave*/) {
+	void noks::NoksIoManager::saveProjectAs(std::string path/*, const NoksDataToSave& dataToSave*/) {
 		std::ofstream file(path);
 
 		// what we want to write
@@ -31,7 +31,7 @@ namespace lve {
 		std::filesystem::copy(directoryAppPath, targetAssetsPath, std::filesystem::copy_options::update_existing | std::filesystem::copy_options::recursive);
 	}
 
-	std::vector<lve::NoksGameObjectPath> NoksIoManager::updateObjectsPath() {
+	std::vector<noks::NoksGameObjectPath> NoksIoManager::updateObjectsPath() {
 		gameObjectsPaths.clear();
 		NoksGameObjectPath gameObjectPath;
 		gameObjectPath.isDirectory = true;

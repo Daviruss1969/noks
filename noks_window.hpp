@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include <string>
-namespace lve {
+namespace noks {
 
 	class NoksWindow {
 	public:
@@ -33,4 +33,4 @@ namespace lve {
 		std::string windowName;
 		GLFWwindow* window;
 	};
-}  // namespace lve
+}  // namespace noks

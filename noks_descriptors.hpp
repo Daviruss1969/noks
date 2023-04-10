@@ -1,13 +1,13 @@
 #pragma once
 
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
 // std
 #include <memory>
 #include <unordered_map>
 #include <vector>
 
-namespace lve {
+namespace noks {
 
 	class NoksDescriptorSetLayout {
 	public:
@@ -100,4 +100,4 @@ namespace lve {
 		std::vector<VkWriteDescriptorSet> writes;
 	};
 
-}  // namespace lve
+}  // namespace noks

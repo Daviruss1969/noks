@@ -1,9 +1,9 @@
 #pragma once
 
-#include "lve_game_object.hpp"
-#include "lve_window.hpp"
+#include "noks_game_object.hpp"
+#include "noks_window.hpp"
 
-namespace lve {
+namespace noks {
 	class KeyboardMovementController {
 	public:
 		struct KeyMappings {
@@ -25,4 +25,4 @@ namespace lve {
 		float moveSpeed{ 3.f };
 		float lookSpeed{ 1.f };
 	};
-}  // namespace lve
+}  // namespace noks

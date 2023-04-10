@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lve_game_object.hpp"
+#include "noks_game_object.hpp"
 
 #include <Windows.h>
 
@@ -10,7 +10,7 @@
 #include <fstream>
 #include <vector>
 
-namespace lve{
+namespace noks{
 	struct NoksGameObjectPath {
 		std::string path;
 		std::string name;
@@ -25,12 +25,12 @@ namespace lve{
 		void setCurrentProjectPath(std::string path) { currentProjectPath = path; }
 
 		void saveProjectAs(std::string path/*, const NoksDataToSave& dataToSave*/);
-		std::vector<lve::NoksGameObjectPath> updateObjectsPath();
+		std::vector<noks::NoksGameObjectPath> updateObjectsPath();
 
 	private:
 		std::string currentProjectPath = "";
 		std::string directoryAppPath = "";
-		std::vector<lve::NoksGameObjectPath> gameObjectsPaths;
+		std::vector<noks::NoksGameObjectPath> gameObjectsPaths;
 	};
 }
 

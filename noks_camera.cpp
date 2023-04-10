@@ -1,10 +1,10 @@
-#include "lve_camera.hpp"
+#include "noks_camera.hpp"
 
 // std
 #include <cassert>
 #include <limits>
 
-namespace lve {
+namespace noks {
 
 	void NoksCamera::setOrthographicProjection(
 		float left, float right, float top, float bottom, float near, float far) {
@@ -106,4 +106,4 @@ namespace lve {
 		inverseViewMatrix[3][2] = position.z;
 	}
 
-}  // namespace lve
+}  // namespace noks

@@ -7,7 +7,7 @@
 #include <stdexcept>
 
 int main() {
-  lve::FirstApp app{};
+  noks::FirstApp app{};
 
   try {
     app.run();

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "lve_camera.hpp"
-#include "lve_game_object.hpp"
+#include "noks_camera.hpp"
+#include "noks_game_object.hpp"
 
 // lib
 #include <vulkan/vulkan.h>
 
-namespace lve {
+namespace noks {
 
 #define MAX_LIGHTS 10
 
@@ -32,4 +32,4 @@ namespace lve {
 		VkDescriptorSet globalDescriptorSet;
 		NoksGameObject::Map& gameObjects;
 	};
-}  // namespace lve
+}  // namespace noks

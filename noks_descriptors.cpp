@@ -1,10 +1,10 @@
-#include "lve_descriptors.hpp"
+#include "noks_descriptors.hpp"
 
 // std
 #include <cassert>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	// *************** Descriptor Set Layout Builder *********************
 
@@ -193,4 +193,4 @@ namespace lve {
 		vkUpdateDescriptorSets(pool.noksDevice.device(), writes.size(), writes.data(), 0, nullptr);
 	}
 
-}  // namespace lve
+}  // namespace noks

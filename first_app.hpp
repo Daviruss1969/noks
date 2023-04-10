@@ -1,16 +1,16 @@
 #pragma once
 
-#include "lve_descriptors.hpp"
-#include "lve_device.hpp"
-#include "lve_game_object.hpp"
-#include "lve_renderer.hpp"
-#include "lve_window.hpp"
+#include "noks_descriptors.hpp"
+#include "noks_device.hpp"
+#include "noks_game_object.hpp"
+#include "noks_renderer.hpp"
+#include "noks_window.hpp"
 
 // std
 #include <memory>
 #include <vector>
 
-namespace lve {
+namespace noks {
 
 	class FirstApp {
 	public:
@@ -39,4 +39,4 @@ namespace lve {
 		std::unique_ptr<NoksDescriptorPool> globalPool{};
 		NoksGameObject::Map gameObjects;
 	};
-}  // namespace lve
+}  // namespace noks

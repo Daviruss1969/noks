@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
 // vulkan headers
 #include <vulkan/vulkan.h>
@@ -10,7 +10,7 @@
 #include <string>
 #include <vector>
 
-namespace lve {
+namespace noks {
 
 	class NoksSwapChain {
 	public:
@@ -89,4 +89,4 @@ namespace lve {
 		size_t currentFrame = 0;
 	};
 
-}  // namespace lve
+}  // namespace noks

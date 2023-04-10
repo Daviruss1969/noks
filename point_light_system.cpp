@@ -12,7 +12,7 @@
 #include <map>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	struct PointLightPushConstants {
 		glm::vec4 position{};
@@ -135,4 +135,4 @@ namespace lve {
 		}
 	}
 
-}  // namespace lve
+}  // namespace noks

@@ -1,11 +1,11 @@
-#include "lve_renderer.hpp"
+#include "noks_renderer.hpp"
 
 // std
 #include <array>
 #include <cassert>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	NoksRenderer::NoksRenderer(NoksWindow& window, NoksDevice& device)
 		: noksWindow{ window }, noksDevice{ device } {
@@ -182,4 +182,4 @@ namespace lve {
 		vkFreeCommandBuffers(noksDevice.device(), noksDevice.getCommandPool(), 1, &commandBuffer);
 	}
 
-}  // namespace lve
+}  // namespace noks

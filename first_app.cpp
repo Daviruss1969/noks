@@ -1,11 +1,11 @@
 #include "first_app.hpp"
 
 #include "keyboard_movement_controller.hpp"
-#include "lve_buffer.hpp"
-#include "lve_camera.hpp"
+#include "noks_buffer.hpp"
+#include "noks_camera.hpp"
 #include "point_light_system.hpp"
 #include "simple_render_system.hpp"
-#include "lve_user_interface.hpp"
+#include "noks_user_interface.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -20,7 +20,7 @@
 #include <chrono>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	FirstApp::FirstApp() {
 		globalPool =
@@ -227,4 +227,4 @@ namespace lve {
 		//	gameObjects.emplace(pointLight.getId(), std::move(pointLight));
 		//}
 	}
-}  // namespace lve
+}  // namespace noks

@@ -1,6 +1,6 @@
-#include "lve_game_object.hpp"
+#include "noks_game_object.hpp"
 
-namespace lve {
+namespace noks {
 
 	glm::mat4 TransformComponent::mat4() {
 		const float c3 = glm::cos(rotation.z);
@@ -68,4 +68,4 @@ namespace lve {
 		return gameObj;
 	}
 
-}  // namespace lve
+}  // namespace noks

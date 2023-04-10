@@ -1,4 +1,4 @@
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
 // std headers
 #include <cstring>
@@ -6,7 +6,7 @@
 #include <set>
 #include <unordered_set>
 
-namespace lve {
+namespace noks {
 
 	// local callback functions
 	static VKAPI_ATTR VkBool32 VKAPI_CALL debugCallback(
@@ -534,4 +534,4 @@ namespace lve {
 		}
 	}
 
-}  // namespace lve
+}  // namespace noks

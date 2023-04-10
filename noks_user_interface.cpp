@@ -1,9 +1,9 @@
-#include "lve_user_interface.hpp"
+#include "noks_user_interface.hpp"
 
 #include <stdexcept>
 #include <iostream>
 
-namespace lve {
+namespace noks {
 	NoksUserInterface::NoksUserInterface(NoksWindow& window, NoksDevice& device, NoksRenderer& renderer) : window(window), device(device), renderer(renderer) {
 		init();
 	}

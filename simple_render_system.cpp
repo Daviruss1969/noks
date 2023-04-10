@@ -11,7 +11,7 @@
 #include <cassert>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	struct SimplePushConstantData {
 		glm::mat4 modelMatrix{ 1.f };
@@ -95,4 +95,4 @@ namespace lve {
 		}
 	}
 
-}  // namespace lve
+}  // namespace noks

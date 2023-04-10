@@ -1,8 +1,8 @@
 #pragma once
 
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
-namespace lve {
+namespace noks {
 	class ObjectPickingSystem {
 	public:
 		ObjectPickingSystem(NoksDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);

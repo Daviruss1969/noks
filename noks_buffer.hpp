@@ -1,8 +1,8 @@
 #pragma once
 
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
-namespace lve {
+namespace noks {
 
 	class NoksBuffer {
 	public:
@@ -56,4 +56,4 @@ namespace lve {
 		VkMemoryPropertyFlags memoryPropertyFlags;
 	};
 
-}  // namespace lve
+}  // namespace noks

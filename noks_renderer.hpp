@@ -1,15 +1,15 @@
 #pragma once
 
-#include "lve_device.hpp"
-#include "lve_swap_chain.hpp"
-#include "lve_window.hpp"
+#include "noks_device.hpp"
+#include "noks_swap_chain.hpp"
+#include "noks_window.hpp"
 
 // std
 #include <cassert>
 #include <memory>
 #include <vector>
 
-namespace lve {
+namespace noks {
 	class NoksRenderer {
 	public:
 		NoksRenderer(NoksWindow& window, NoksDevice& device);
@@ -54,4 +54,4 @@ namespace lve {
 		int currentFrameIndex{ 0 };
 		bool isFrameStarted{ false };
 	};
-}  // namespace lve
+}  // namespace noks

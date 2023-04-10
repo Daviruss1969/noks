@@ -1,7 +1,7 @@
 #pragma once
 
-#include "lve_buffer.hpp"
-#include "lve_device.hpp"
+#include "noks_buffer.hpp"
+#include "noks_device.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -12,7 +12,7 @@
 #include <memory>
 #include <vector>
 
-namespace lve {
+namespace noks {
 	class NoksModel {
 	public:
 		struct Vertex {
@@ -62,4 +62,4 @@ namespace lve {
 		std::unique_ptr<NoksBuffer> indexBuffer;
 		uint32_t indexCount;
 	};
-}  // namespace lve
+}  // namespace noks

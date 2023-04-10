@@ -5,13 +5,13 @@
  * https://github.com/SaschaWillems/Vulkan/blob/master/base/VulkanBuffer.h
  */
 
-#include "lve_buffer.hpp"
+#include "noks_buffer.hpp"
 
  // std
 #include <cassert>
 #include <cstring>
 
-namespace lve {
+namespace noks {
 
 	/**
 	 * Returns the minimum instance size required to be compatible with devices minOffsetAlignment
@@ -199,4 +199,4 @@ namespace lve {
 		return invalidate(alignmentSize, index * alignmentSize);
 	}
 
-}  // namespace lve
+}  // namespace noks

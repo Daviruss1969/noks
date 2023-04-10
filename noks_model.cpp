@@ -1,6 +1,6 @@
-#include "lve_model.hpp"
+#include "noks_model.hpp"
 
-#include "lve_utils.hpp"
+#include "noks_utils.hpp"
 
 // libs
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -15,16 +15,16 @@
 
 namespace std {
 	template <>
-	struct hash<lve::NoksModel::Vertex> {
-		size_t operator()(lve::NoksModel::Vertex const& vertex) const {
+	struct hash<noks::NoksModel::Vertex> {
+		size_t operator()(noks::NoksModel::Vertex const& vertex) const {
 			size_t seed = 0;
-			lve::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+			noks::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
 			return seed;
 		}
 	};
 }  // namespace std
 
-namespace lve {
+namespace noks {
 
 	NoksModel::NoksModel(NoksDevice& device, const NoksModel::Builder& builder) : noksDevice{ device } {
 		createVertexBuffers(builder.vertices);
@@ -193,4 +193,4 @@ namespace lve {
 		}
 	}
 
-}  // namespace lve
+}  // namespace noks

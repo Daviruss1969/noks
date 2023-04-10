@@ -1,12 +1,12 @@
 #pragma once
 
-#include "lve_device.hpp"
+#include "noks_device.hpp"
 
 // std
 #include <string>
 #include <vector>
 
-namespace lve {
+namespace noks {
 
 	struct PipelineConfigInfo {
 		PipelineConfigInfo() = default;
@@ -61,4 +61,4 @@ namespace lve {
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule;
 	};
-}  // namespace lve
+}  // namespace noks

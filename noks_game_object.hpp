@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lve_model.hpp"
+#include "noks_model.hpp"
 
 // libs
 #include <glm/gtc/matrix_transform.hpp>
@@ -9,7 +9,7 @@
 #include <memory>
 #include <unordered_map>
 
-namespace lve {
+namespace noks {
 
 	struct TransformComponent {
 		glm::vec3 translation{};
@@ -60,4 +60,4 @@ namespace lve {
 
 		id_t id;
 	};
-}  // namespace lve
+}  // namespace noks

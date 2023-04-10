@@ -1,4 +1,4 @@
-#include "lve_swap_chain.hpp"
+#include "noks_swap_chain.hpp"
 
 // std
 #include <array>
@@ -9,7 +9,7 @@
 #include <set>
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	NoksSwapChain::NoksSwapChain(NoksDevice& deviceRef, VkExtent2D extent)
 		: device{ deviceRef }, windowExtent{ extent } {
@@ -427,4 +427,4 @@ namespace lve {
 			VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT);
 	}
 
-}  // namespace lve
+}  // namespace noks

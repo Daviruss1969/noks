@@ -1,12 +1,12 @@
 #pragma once
 
-#include "lve_window.hpp"
+#include "noks_window.hpp"
 
 // std lib headers
 #include <string>
 #include <vector>
 
-namespace lve {
+namespace noks {
 
 	struct SwapChainSupportDetails {
 		VkSurfaceCapabilitiesKHR capabilities;
@@ -107,4 +107,4 @@ namespace lve {
 		const std::vector<const char*> deviceExtensions = { VK_KHR_SWAPCHAIN_EXTENSION_NAME };
 	};
 
-}  // namespace lve
+}  // namespace noks

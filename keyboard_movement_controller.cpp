@@ -4,7 +4,7 @@
 #include <limits>
 #include <iostream>
 
-namespace lve {
+namespace noks {
 
 	void KeyboardMovementController::moveInPlaneXZ(
 		GLFWwindow* window, float dt, NoksGameObject& gameObject) {
@@ -39,4 +39,4 @@ namespace lve {
 			gameObject.transform.translation += moveSpeed * dt * glm::normalize(moveDir);
 		}
 	}
-}  // namespace lve
+}  // namespace noks

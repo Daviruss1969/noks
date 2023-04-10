@@ -1,9 +1,9 @@
-#include "lve_window.hpp"
+#include "noks_window.hpp"
 
 // std
 #include <stdexcept>
 
-namespace lve {
+namespace noks {
 
 	NoksWindow::NoksWindow(int w, int h, std::string name) : width{ w }, height{ h }, windowName{ name } {
 		initWindow();
@@ -38,4 +38,4 @@ namespace lve {
 		noksWindow->height = height;
 	}
 
-}  // namespace lve
+}  // namespace noks

@@ -26,7 +26,7 @@ namespace std {
 
 namespace lve {
 
-	LveModel::LveModel(LveDevice& device, const LveModel::Builder& builder) : lveDevice{ device } {
+	LveModel::LveModel(NoksDevice& device, const LveModel::Builder& builder) : noksDevice{ device } {
 		createVertexBuffers(builder.vertices);
 		createIndexBuffers(builder.indices);
 	}
@@ -34,7 +34,7 @@ namespace lve {
 	LveModel::~LveModel() {}
 
 	std::unique_ptr<LveModel> LveModel::createModelFromFile(
-		LveDevice& device, const std::string& filepath) {
+		NoksDevice& device, const std::string& filepath) {
 		Builder builder{};
 		builder.loadModel(filepath);
 		return std::make_unique<LveModel>(device, builder);
@@ -47,7 +47,7 @@ namespace lve {
 		uint32_t vertexSize = sizeof(vertices[0]);
 
 		NoksBuffer stagingBuffer{
-			lveDevice,
+			noksDevice,
 			vertexSize,
 			vertexCount,
 			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
@@ -58,13 +58,13 @@ namespace lve {
 		stagingBuffer.writeToBuffer((void*)vertices.data());
 
 		vertexBuffer = std::make_unique<NoksBuffer>(
-			lveDevice,
+			noksDevice,
 			vertexSize,
 			vertexCount,
 			VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		lveDevice.copyBuffer(stagingBuffer.getBuffer(), vertexBuffer->getBuffer(), bufferSize);
+		noksDevice.copyBuffer(stagingBuffer.getBuffer(), vertexBuffer->getBuffer(), bufferSize);
 	}
 
 	void LveModel::createIndexBuffers(const std::vector<uint32_t>& indices) {
@@ -79,7 +79,7 @@ namespace lve {
 		uint32_t indexSize = sizeof(indices[0]);
 
 		NoksBuffer stagingBuffer{
-			lveDevice,
+			noksDevice,
 			indexSize,
 			indexCount,
 			VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
@@ -90,13 +90,13 @@ namespace lve {
 		stagingBuffer.writeToBuffer((void*)indices.data());
 
 		indexBuffer = std::make_unique<NoksBuffer>(
-			lveDevice,
+			noksDevice,
 			indexSize,
 			indexCount,
 			VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
 
-		lveDevice.copyBuffer(stagingBuffer.getBuffer(), indexBuffer->getBuffer(), bufferSize);
+		noksDevice.copyBuffer(stagingBuffer.getBuffer(), indexBuffer->getBuffer(), bufferSize);
 	}
 
 	void LveModel::draw(VkCommandBuffer commandBuffer) {

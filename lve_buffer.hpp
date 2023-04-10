@@ -7,7 +7,7 @@ namespace lve {
 	class NoksBuffer {
 	public:
 		NoksBuffer(
-			LveDevice& device,
+			NoksDevice& device,
 			VkDeviceSize instanceSize,
 			uint32_t instanceCount,
 			VkBufferUsageFlags usageFlags,
@@ -43,7 +43,7 @@ namespace lve {
 	private:
 		static VkDeviceSize getAlignment(VkDeviceSize instanceSize, VkDeviceSize minOffsetAlignment);
 
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 		void* mapped = nullptr;
 		VkBuffer buffer = VK_NULL_HANDLE;
 		VkDeviceMemory memory = VK_NULL_HANDLE;

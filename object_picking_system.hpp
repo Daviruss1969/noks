@@ -5,7 +5,7 @@
 namespace lve {
 	class ObjectPickingSystem {
 	public:
-		ObjectPickingSystem(LveDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+		ObjectPickingSystem(NoksDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 		~ObjectPickingSystem();
 
 		ObjectPickingSystem(const ObjectPickingSystem&) = delete;

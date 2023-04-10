@@ -32,7 +32,7 @@ namespace lve {
 	class LvePipeline {
 	public:
 		LvePipeline(
-			LveDevice& device,
+			NoksDevice& device,
 			const std::string& vertFilepath,
 			const std::string& fragFilepath,
 			const PipelineConfigInfo& configInfo);
@@ -56,7 +56,7 @@ namespace lve {
 
 		void createShaderModule(const std::vector<char>& code, VkShaderModule* shaderModule);
 
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 		VkPipeline graphicsPipeline;
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule;

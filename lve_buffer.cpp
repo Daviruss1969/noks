@@ -30,13 +30,13 @@ namespace lve {
 	}
 
 	NoksBuffer::NoksBuffer(
-		LveDevice& device,
+		NoksDevice& device,
 		VkDeviceSize instanceSize,
 		uint32_t instanceCount,
 		VkBufferUsageFlags usageFlags,
 		VkMemoryPropertyFlags memoryPropertyFlags,
 		VkDeviceSize minOffsetAlignment)
-		: lveDevice{ device },
+		: noksDevice{ device },
 		instanceSize{ instanceSize },
 		instanceCount{ instanceCount },
 		usageFlags{ usageFlags },
@@ -48,8 +48,8 @@ namespace lve {
 
 	NoksBuffer::~NoksBuffer() {
 		unmap();
-		vkDestroyBuffer(lveDevice.device(), buffer, nullptr);
-		vkFreeMemory(lveDevice.device(), memory, nullptr);
+		vkDestroyBuffer(noksDevice.device(), buffer, nullptr);
+		vkFreeMemory(noksDevice.device(), memory, nullptr);
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace lve {
 	 */
 	VkResult NoksBuffer::map(VkDeviceSize size, VkDeviceSize offset) {
 		assert(buffer && memory && "Called map on buffer before create");
-		return vkMapMemory(lveDevice.device(), memory, offset, size, 0, &mapped);
+		return vkMapMemory(noksDevice.device(), memory, offset, size, 0, &mapped);
 	}
 
 	/**
@@ -73,7 +73,7 @@ namespace lve {
 	 */
 	void NoksBuffer::unmap() {
 		if (mapped) {
-			vkUnmapMemory(lveDevice.device(), memory);
+			vkUnmapMemory(noksDevice.device(), memory);
 			mapped = nullptr;
 		}
 	}
@@ -117,7 +117,7 @@ namespace lve {
 		mappedRange.memory = memory;
 		mappedRange.offset = offset;
 		mappedRange.size = size;
-		return vkFlushMappedMemoryRanges(lveDevice.device(), 1, &mappedRange);
+		return vkFlushMappedMemoryRanges(noksDevice.device(), 1, &mappedRange);
 	}
 
 	/**
@@ -137,7 +137,7 @@ namespace lve {
 		mappedRange.memory = memory;
 		mappedRange.offset = offset;
 		mappedRange.size = size;
-		return vkInvalidateMappedMemoryRanges(lveDevice.device(), 1, &mappedRange);
+		return vkInvalidateMappedMemoryRanges(noksDevice.device(), 1, &mappedRange);
 	}
 
 	/**

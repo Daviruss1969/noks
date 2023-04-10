@@ -12,7 +12,7 @@
 namespace lve {
 	class LveRenderer {
 	public:
-		LveRenderer(LveWindow& window, LveDevice& device);
+		LveRenderer(LveWindow& window, NoksDevice& device);
 		~LveRenderer();
 
 		LveRenderer(const LveRenderer&) = delete;
@@ -46,7 +46,7 @@ namespace lve {
 		void recreateSwapChain();
 
 		LveWindow& lveWindow;
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 		std::unique_ptr<LveSwapChain> lveSwapChain;
 		std::vector<VkCommandBuffer> commandBuffers;
 

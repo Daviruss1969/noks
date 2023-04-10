@@ -21,14 +21,14 @@ namespace lve {
 	};
 
 	PointLightSystem::PointLightSystem(
-		LveDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-		: lveDevice{ device } {
+		NoksDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
+		: noksDevice{ device } {
 		createPipelineLayout(globalSetLayout);
 		createPipeline(renderPass);
 	}
 
 	PointLightSystem::~PointLightSystem() {
-		vkDestroyPipelineLayout(lveDevice.device(), pipelineLayout, nullptr);
+		vkDestroyPipelineLayout(noksDevice.device(), pipelineLayout, nullptr);
 	}
 
 	void PointLightSystem::createPipelineLayout(VkDescriptorSetLayout globalSetLayout) {
@@ -45,7 +45,7 @@ namespace lve {
 		pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
 		pipelineLayoutInfo.pushConstantRangeCount = 1;
 		pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
-		if (vkCreatePipelineLayout(lveDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
+		if (vkCreatePipelineLayout(noksDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) !=
 			VK_SUCCESS) {
 			throw std::runtime_error("failed to create pipeline layout!");
 		}
@@ -62,7 +62,7 @@ namespace lve {
 		pipelineConfig.renderPass = renderPass;
 		pipelineConfig.pipelineLayout = pipelineLayout;
 		lvePipeline = std::make_unique<LvePipeline>(
-			lveDevice,
+			noksDevice,
 			"shaders/point_light.vert.spv",
 			"shaders/point_light.frag.spv",
 			pipelineConfig);

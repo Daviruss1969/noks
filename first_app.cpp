@@ -24,7 +24,7 @@ namespace lve {
 
 	FirstApp::FirstApp() {
 		globalPool =
-			NoksDescriptorPool::Builder(lveDevice)
+			NoksDescriptorPool::Builder(noksDevice)
 			.setMaxSets(LveSwapChain::MAX_FRAMES_IN_FLIGHT)
 			.addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, LveSwapChain::MAX_FRAMES_IN_FLIGHT)
 			.build();
@@ -37,7 +37,7 @@ namespace lve {
 		std::vector<std::unique_ptr<NoksBuffer>> uboBuffers(LveSwapChain::MAX_FRAMES_IN_FLIGHT);
 		for (int i = 0; i < uboBuffers.size(); i++) {
 			uboBuffers[i] = std::make_unique<NoksBuffer>(
-				lveDevice,
+				noksDevice,
 				sizeof(GlobalUbo),
 				1,
 				VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
@@ -46,7 +46,7 @@ namespace lve {
 		}
 
 		auto globalSetLayout =
-			NoksDescriptorSetLayout::Builder(lveDevice)
+			NoksDescriptorSetLayout::Builder(noksDevice)
 			.addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
 			.build();
 
@@ -59,14 +59,14 @@ namespace lve {
 		}
 
 		SimpleRenderSystem simpleRenderSystem{
-			lveDevice,
+			noksDevice,
 			lveRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
 		PointLightSystem pointLightSystem{
-			lveDevice,
+			noksDevice,
 			lveRenderer.getSwapChainRenderPass(),
 			globalSetLayout->getDescriptorSetLayout() };
-		NoksUserInterface userInterface = NoksUserInterface(lveWindow, lveDevice, lveRenderer);
+		NoksUserInterface userInterface = NoksUserInterface(lveWindow, noksDevice, lveRenderer);
 		LveCamera camera{};
 
 		auto viewerObject = LveGameObject::createGameObject();
@@ -150,7 +150,7 @@ namespace lve {
 			}
 		}
 
-		vkDeviceWaitIdle(lveDevice.device());
+		vkDeviceWaitIdle(noksDevice.device());
 	}
 
 	void FirstApp::newProject() {
@@ -162,7 +162,7 @@ namespace lve {
 	}
 
 	void FirstApp::addGameObjects(std::string path, TransformComponent transform) {
-		std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(lveDevice, path);
+		std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(noksDevice, path);
 		auto object = LveGameObject::createGameObject();
 		object.model = lveModel;
 		object.transform = transform;
@@ -179,28 +179,28 @@ namespace lve {
 
 	void FirstApp::loadGameObjects() {
 		//std::shared_ptr<LveModel> lveModel =
-		//	LveModel::createModelFromFile(lveDevice, "models/flat_vase.obj");
+		//	LveModel::createModelFromFile(noksDevice, "models/flat_vase.obj");
 		//auto flatVase = LveGameObject::createGameObject();
 		//flatVase.model = lveModel;
 		//flatVase.transform.translation = { -.5f, .5f, 0.f };
 		//flatVase.transform.scale = { 3.f, 1.5f, 3.f };
 		//gameObjects.emplace(flatVase.getId(), std::move(flatVase));
 
-		//lveModel = LveModel::createModelFromFile(lveDevice, "models/smooth_vase.obj");
+		//lveModel = LveModel::createModelFromFile(noksDevice, "models/smooth_vase.obj");
 		//auto smoothVase = LveGameObject::createGameObject();
 		//smoothVase.model = lveModel;
 		//smoothVase.transform.translation = { .5f, .5f, 0.f };
 		//smoothVase.transform.scale = { 3.f, 1.5f, 3.f };
 		//gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
-		//lveModel = LveModel::createModelFromFile(lveDevice, "models/girl.obj");
+		//lveModel = LveModel::createModelFromFile(noksDevice, "models/girl.obj");
 		//auto girl = LveGameObject::createGameObject();
 		//girl.model = lveModel;
 		//girl.transform.translation.y = .5f;
 		//girl.transform.rotation.x = glm::radians(180.f);
 		//gameObjects.emplace(girl.getId(), std::move(girl));
 
-		//std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(lveDevice, "models/quad.obj");
+		//std::shared_ptr<LveModel> lveModel = LveModel::createModelFromFile(noksDevice, "models/quad.obj");
 		//auto floor = LveGameObject::createGameObject();
 		//floor.model = lveModel;
 		//floor.transform.translation = { 0.f, .5f, 0.f };

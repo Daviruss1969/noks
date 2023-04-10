@@ -37,14 +37,14 @@ namespace lve {
 			void loadModel(const std::string& filepath);
 		};
 
-		LveModel(LveDevice& device, const LveModel::Builder& builder);
+		LveModel(NoksDevice& device, const LveModel::Builder& builder);
 		~LveModel();
 
 		LveModel(const LveModel&) = delete;
 		LveModel& operator=(const LveModel&) = delete;
 
 		static std::unique_ptr<LveModel> createModelFromFile(
-			LveDevice& device, const std::string& filepath);
+			NoksDevice& device, const std::string& filepath);
 
 		void bind(VkCommandBuffer commandBuffer);
 		void draw(VkCommandBuffer commandBuffer);
@@ -53,7 +53,7 @@ namespace lve {
 		void createVertexBuffers(const std::vector<Vertex>& vertices);
 		void createIndexBuffers(const std::vector<uint32_t>& indices);
 
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 
 		std::unique_ptr<NoksBuffer> vertexBuffer;
 		uint32_t vertexCount;

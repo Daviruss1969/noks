@@ -13,7 +13,7 @@ namespace lve {
 	public:
 		class Builder {
 		public:
-			Builder(LveDevice& lveDevice) : lveDevice{ lveDevice } {}
+			Builder(NoksDevice& noksDevice) : noksDevice{ noksDevice } {}
 
 			Builder& addBinding(
 				uint32_t binding,
@@ -23,12 +23,12 @@ namespace lve {
 			std::unique_ptr<NoksDescriptorSetLayout> build() const;
 
 		private:
-			LveDevice& lveDevice;
+			NoksDevice& noksDevice;
 			std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings{};
 		};
 
 		NoksDescriptorSetLayout(
-			LveDevice& lveDevice, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
+			NoksDevice& noksDevice, std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings);
 		~NoksDescriptorSetLayout();
 		NoksDescriptorSetLayout(const NoksDescriptorSetLayout&) = delete;
 		NoksDescriptorSetLayout& operator=(const NoksDescriptorSetLayout&) = delete;
@@ -36,7 +36,7 @@ namespace lve {
 		VkDescriptorSetLayout getDescriptorSetLayout() const { return descriptorSetLayout; }
 
 	private:
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 		VkDescriptorSetLayout descriptorSetLayout;
 		std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> bindings;
 
@@ -47,7 +47,7 @@ namespace lve {
 	public:
 		class Builder {
 		public:
-			Builder(LveDevice& lveDevice) : lveDevice{ lveDevice } {}
+			Builder(NoksDevice& noksDevice) : noksDevice{ noksDevice } {}
 
 			Builder& addPoolSize(VkDescriptorType descriptorType, uint32_t count);
 			Builder& setPoolFlags(VkDescriptorPoolCreateFlags flags);
@@ -55,14 +55,14 @@ namespace lve {
 			std::unique_ptr<NoksDescriptorPool> build() const;
 
 		private:
-			LveDevice& lveDevice;
+			NoksDevice& noksDevice;
 			std::vector<VkDescriptorPoolSize> poolSizes{};
 			uint32_t maxSets = 1000;
 			VkDescriptorPoolCreateFlags poolFlags = 0;
 		};
 
 		NoksDescriptorPool(
-			LveDevice& lveDevice,
+			NoksDevice& noksDevice,
 			uint32_t maxSets,
 			VkDescriptorPoolCreateFlags poolFlags,
 			const std::vector<VkDescriptorPoolSize>& poolSizes);
@@ -78,7 +78,7 @@ namespace lve {
 		void resetPool();
 
 	private:
-		LveDevice& lveDevice;
+		NoksDevice& noksDevice;
 		VkDescriptorPool descriptorPool;
 
 		friend class NoksDescriptorWriter;

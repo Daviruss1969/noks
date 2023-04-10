@@ -22,7 +22,7 @@ namespace lve {
 		bool isComplete() { return graphicsFamilyHasValue && presentFamilyHasValue; }
 	};
 
-	class LveDevice {
+	class NoksDevice {
 	public:
 #ifdef NDEBUG
 		const bool enableValidationLayers = false;
@@ -30,14 +30,14 @@ namespace lve {
 		const bool enableValidationLayers = true;
 #endif
 
-		LveDevice(LveWindow& window);
-		~LveDevice();
+		NoksDevice(LveWindow& window);
+		~NoksDevice();
 
 		// Not copyable or movable
-		LveDevice(const LveDevice&) = delete;
-		LveDevice& operator=(const LveDevice&) = delete;
-		LveDevice(LveDevice&&) = delete;
-		LveDevice& operator=(LveDevice&&) = delete;
+		NoksDevice(const NoksDevice&) = delete;
+		NoksDevice& operator=(const NoksDevice&) = delete;
+		NoksDevice(NoksDevice&&) = delete;
+		NoksDevice& operator=(NoksDevice&&) = delete;
 
 		VkInstance getVulkanInstance() { return instance; }
 		VkCommandPool getCommandPool() { return commandPool; }

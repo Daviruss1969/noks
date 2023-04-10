@@ -7,8 +7,8 @@
 
 namespace lve {
 
-	LveRenderer::LveRenderer(LveWindow& window, LveDevice& device)
-		: lveWindow{ window }, lveDevice{ device } {
+	LveRenderer::LveRenderer(LveWindow& window, NoksDevice& device)
+		: lveWindow{ window }, noksDevice{ device } {
 		recreateSwapChain();
 		createCommandBuffers();
 	}
@@ -21,14 +21,14 @@ namespace lve {
 			extent = lveWindow.getExtent();
 			glfwWaitEvents();
 		}
-		vkDeviceWaitIdle(lveDevice.device());
+		vkDeviceWaitIdle(noksDevice.device());
 
 		if (lveSwapChain == nullptr) {
-			lveSwapChain = std::make_unique<LveSwapChain>(lveDevice, extent);
+			lveSwapChain = std::make_unique<LveSwapChain>(noksDevice, extent);
 		}
 		else {
 			std::shared_ptr<LveSwapChain> oldSwapChain = std::move(lveSwapChain);
-			lveSwapChain = std::make_unique<LveSwapChain>(lveDevice, extent, oldSwapChain);
+			lveSwapChain = std::make_unique<LveSwapChain>(noksDevice, extent, oldSwapChain);
 
 			if (!oldSwapChain->compareSwapFormats(*lveSwapChain.get())) {
 				throw std::runtime_error("Swap chain image(or depth) format has changed!");
@@ -42,10 +42,10 @@ namespace lve {
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = lveDevice.getCommandPool();
+		allocInfo.commandPool = noksDevice.getCommandPool();
 		allocInfo.commandBufferCount = static_cast<uint32_t>(commandBuffers.size());
 
-		if (vkAllocateCommandBuffers(lveDevice.device(), &allocInfo, commandBuffers.data()) !=
+		if (vkAllocateCommandBuffers(noksDevice.device(), &allocInfo, commandBuffers.data()) !=
 			VK_SUCCESS) {
 			throw std::runtime_error("failed to allocate command buffers!");
 		}
@@ -53,8 +53,8 @@ namespace lve {
 
 	void LveRenderer::freeCommandBuffers() {
 		vkFreeCommandBuffers(
-			lveDevice.device(),
-			lveDevice.getCommandPool(),
+			noksDevice.device(),
+			noksDevice.getCommandPool(),
 			static_cast<uint32_t>(commandBuffers.size()),
 			commandBuffers.data());
 		commandBuffers.clear();
@@ -152,11 +152,11 @@ namespace lve {
 		VkCommandBufferAllocateInfo allocInfo{};
 		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
 		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
-		allocInfo.commandPool = lveDevice.getCommandPool();
+		allocInfo.commandPool = noksDevice.getCommandPool();
 		allocInfo.commandBufferCount = 1;
 
 		VkCommandBuffer commandBuffer;
-		vkAllocateCommandBuffers(lveDevice.device(), &allocInfo, &commandBuffer);
+		vkAllocateCommandBuffers(noksDevice.device(), &allocInfo, &commandBuffer);
 
 		VkCommandBufferBeginInfo beginInfo{};
 		beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -176,10 +176,10 @@ namespace lve {
 		submitInfo.commandBufferCount = 1;
 		submitInfo.pCommandBuffers = &commandBuffer;
 
-		vkQueueSubmit(lveDevice.graphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
-		vkQueueWaitIdle(lveDevice.graphicsQueue());
+		vkQueueSubmit(noksDevice.graphicsQueue(), 1, &submitInfo, VK_NULL_HANDLE);
+		vkQueueWaitIdle(noksDevice.graphicsQueue());
 
-		vkFreeCommandBuffers(lveDevice.device(), lveDevice.getCommandPool(), 1, &commandBuffer);
+		vkFreeCommandBuffers(noksDevice.device(), noksDevice.getCommandPool(), 1, &commandBuffer);
 	}
 
 }  // namespace lve

@@ -10,18 +10,18 @@
 namespace lve {
 
 	LvePipeline::LvePipeline(
-		LveDevice& device,
+		NoksDevice& device,
 		const std::string& vertFilepath,
 		const std::string& fragFilepath,
 		const PipelineConfigInfo& configInfo)
-		: lveDevice{ device } {
+		: noksDevice{ device } {
 		createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
 	}
 
 	LvePipeline::~LvePipeline() {
-		vkDestroyShaderModule(lveDevice.device(), vertShaderModule, nullptr);
-		vkDestroyShaderModule(lveDevice.device(), fragShaderModule, nullptr);
-		vkDestroyPipeline(lveDevice.device(), graphicsPipeline, nullptr);
+		vkDestroyShaderModule(noksDevice.device(), vertShaderModule, nullptr);
+		vkDestroyShaderModule(noksDevice.device(), fragShaderModule, nullptr);
+		vkDestroyPipeline(noksDevice.device(), graphicsPipeline, nullptr);
 	}
 
 	std::vector<char> LvePipeline::readFile(const std::string& filepath) {
@@ -106,7 +106,7 @@ namespace lve {
 		pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
 
 		if (vkCreateGraphicsPipelines(
-			lveDevice.device(),
+			noksDevice.device(),
 			VK_NULL_HANDLE,
 			1,
 			&pipelineInfo,
@@ -122,7 +122,7 @@ namespace lve {
 		createInfo.codeSize = code.size();
 		createInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
 
-		if (vkCreateShaderModule(lveDevice.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
+		if (vkCreateShaderModule(noksDevice.device(), &createInfo, nullptr, shaderModule) != VK_SUCCESS) {
 			throw std::runtime_error("failed to create shader module");
 		}
 	}

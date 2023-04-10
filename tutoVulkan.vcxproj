@@ -202,12 +202,15 @@
     <ClInclude Include="lve_window.hpp" />
     <ClInclude Include="lve_device.hpp" />
     <ClInclude Include="lve_swap_chain.hpp" />
+    <ClInclude Include="object_picking_system.hpp" />
     <ClInclude Include="point_light_system.hpp" />
     <ClInclude Include="simple_render_system.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="point_light.vert" />
     <None Include="shaders\compile.bat" />
+    <None Include="shaders\object_picking.frag" />
+    <None Include="shaders\object_picking.vert" />
     <None Include="shaders\point_light.frag" />
     <None Include="shaders\simple_shader.frag" />
     <None Include="shaders\simple_shader.vert" />

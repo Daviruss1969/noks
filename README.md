@@ -18,12 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-<!-- [![Contributors][contributors-shield]][contributors-url]
+[![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url] -->
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
 
 
@@ -37,7 +37,7 @@
 <h3 align="center">Noks</h3>
 
   <p align="center">
-    Noks is an open-source, cross-platform game engine written in modern C++17.
+    Noks is an open-source, cross-platform game engine written in modern C++17 with the Vulkan API.
     <br />
     <a href="https://github.com/Daviruss1969/noks"><strong>Explore the docs »</strong></a>
     <br />
@@ -68,8 +68,7 @@
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
+    </li>>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -83,9 +82,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![Product Name Screen Shot](https://github.com/Daviruss1969/noks/blob/master/ressources/images/product-screenshot.png)
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+Here's goes the project description
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,14 +92,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* <img src="https://www.vulkan.org/user/themes/vulkan/images/logo/vulkan-logo.svg"  width="80" height="20">
+* <img src="https://www.glfw.org/img/favicon/favicon-196x196.png"  width="30" height="30"> GLFW
+* <img src="https://www.opengl.org/sdk/libs/GLM/image/logo-mini.png" width="30" height="30"> GLM
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -141,23 +135,27 @@ This is an example of how to list things you need to use the software and how to
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+<!-- ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+ -->
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Project description
+- [ ] Build with CMake
+  - [ ] implement CMake
+  - [ ] reorganize the project
+  - [ ] getting started todo
+- [ ] Add skyboxes
+- [ ] Object picking
+- [ ] Work on shadows
 
 See the [open issues](https://github.com/Daviruss1969/noks/issues) for a full list of proposed features (and known issues).
 
@@ -195,7 +193,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Loiodice Lukas - [@instagram](https://www.instagram.com/ldc.lukas/) - lukas.loiodic@gmail.com
 
 Project Link: [https://github.com/Daviruss1969/noks](https://github.com/Daviruss1969/noks)
 
@@ -204,13 +202,13 @@ Project Link: [https://github.com/Daviruss1969/noks](https://github.com/Daviruss
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+<!-- ## Acknowledgments
 
 * []()
 * []()
 * []()
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
@@ -227,9 +225,9 @@ Project Link: [https://github.com/Daviruss1969/noks](https://github.com/Daviruss
 [license-shield]: https://img.shields.io/github/license/Daviruss1969/noks.svg?style=for-the-badge
 [license-url]: https://github.com/Daviruss1969/noks/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+[linkedin-url]: https://www.linkedin.com/in/lukas-loiodice-648541221/
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Vulkan]: https://www.vulkan.org/user/themes/vulkan/images/logo/vulkan-logo.svg
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/

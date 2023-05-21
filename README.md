@@ -149,10 +149,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [ ] Project description
-- [ ] Build with CMake
-  - [ ] implement CMake
-  - [ ] reorganize the project
-  - [ ] getting started todo
+- [ ] Getting started
 - [ ] Add skyboxes
 - [ ] Object picking
 - [ ] Work on shadows

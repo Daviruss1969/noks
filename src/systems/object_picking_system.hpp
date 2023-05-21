@@ -1,6 +1,6 @@
 #pragma once
 
-#include "noks_device.hpp"
+#include "../noks_device.hpp"
 
 namespace noks {
 	class ObjectPickingSystem {

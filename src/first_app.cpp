@@ -3,9 +3,9 @@
 #include "keyboard_movement_controller.hpp"
 #include "noks_buffer.hpp"
 #include "noks_camera.hpp"
-#include "point_light_system.hpp"
-#include "simple_render_system.hpp"
-#include "noks_user_interface.hpp"
+#include "systems/point_light_system.hpp"
+#include "systems/simple_render_system.hpp"
+#include "gui/noks_user_interface.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -122,7 +122,7 @@ namespace noks {
 					// render
 					noksRenderer.beginSwapChainRenderPass(commandBuffer);
 
-					// order matter here
+					// order matter here maybe pass interfaceEvent into the frameInfo
 					simpleRenderSystem.renderGameObjects(frameInfo);
 					pointLightSystem.render(frameInfo);
 					interfaceEvents = userInterface.render(frameInfo.commandBuffer);

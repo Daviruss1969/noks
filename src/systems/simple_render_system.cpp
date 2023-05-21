@@ -58,8 +58,8 @@ namespace noks {
 		pipelineConfig.pipelineLayout = pipelineLayout;
 		noksPipeline = std::make_unique<NoksPipeline>(
 			noksDevice,
-			"shaders/simple_shader.vert.spv",
-			"shaders/simple_shader.frag.spv",
+			"src/shaders/simple_shader.vert.spv",
+			"src/shaders/simple_shader.frag.spv",
 			pipelineConfig);
 	}
 

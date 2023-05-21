@@ -1,10 +1,10 @@
 #pragma once
 
-#include "noks_camera.hpp"
-#include "noks_device.hpp"
-#include "noks_frame_info.hpp"
-#include "noks_game_object.hpp"
-#include "noks_pipeline.hpp"
+#include "../noks_camera.hpp"
+#include "../noks_device.hpp"
+#include "../noks_frame_info.hpp"
+#include "../noks_game_object.hpp"
+#include "../noks_pipeline.hpp"
 
 // std
 #include <memory>

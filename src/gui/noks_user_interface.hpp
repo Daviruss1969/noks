@@ -3,24 +3,27 @@
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 
-#include "noks_window.hpp"
-#include "noks_device.hpp"
-#include "noks_renderer.hpp"
-#include "noks_io_manager.hpp"
+// Src
+#include "../noks_window.hpp"
+#include "../noks_device.hpp"
+#include "../noks_renderer.hpp"
+#include "../noks_io_manager.hpp"
 
-// libs
+// Libs
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
-
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_vulkan.h"
-
-#include <Windows.h>
-#include <commdlg.h>
 #include <GLFW/glfw3.h>
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
+
+// Imgui
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_vulkan.h"
+
+// Others
+#include <Windows.h>
+#include <commdlg.h>
 
 namespace noks {
 	typedef enum NoksWindowStep {

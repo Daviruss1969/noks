@@ -50,7 +50,9 @@ namespace noks {
 
 		const std::string getgameObjectToAdd() const { return gameObjectToAdd; }
 
-		NoksInterfaceEvents* render(VkCommandBuffer& commandBuffer);
+		const void setInterfaceEvent(NoksInterfaceEvents interfaceEvents) { this->interfaceEvents = interfaceEvents; }
+
+		NoksInterfaceEvents render(VkCommandBuffer& commandBuffer);
 	private:
 		void createImGuiDescriptorPool();
 		void init();

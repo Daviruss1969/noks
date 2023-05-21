@@ -78,7 +78,7 @@ namespace noks {
 		ImGui_ImplVulkan_DestroyFontUploadObjects();
 	}
 
-	NoksInterfaceEvents* NoksUserInterface::render(VkCommandBuffer& commandBuffer) {
+	NoksInterfaceEvents NoksUserInterface::render(VkCommandBuffer& commandBuffer) {
 
 		const ImGuiViewport* viewport = ImGui::GetMainViewport();
 		ImGui::SetNextWindowPos(viewport->WorkPos);
@@ -125,7 +125,7 @@ namespace noks {
 				}
 
 				if (ImGui::MenuItem("Save")) { 
-					// todo ajouter l'écriture de fichier noks
+					// todo ajouter l'ï¿½criture de fichier noks
 				}
 
 				if (ImGui::MenuItem("Save As")) {
@@ -164,7 +164,7 @@ namespace noks {
 		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer, 0);
 		ImGui::EndFrame();
 
-		return &interfaceEvents;
+		return interfaceEvents;
 	}
 
 	void NoksUserInterface::renderChooseProject() {
@@ -180,9 +180,6 @@ namespace noks {
 		{
 			ImGui::Begin("Project explorer");
 			ImGui::Text("todo project tree");
-			if (ImGui::Button("addWomen", ImVec2(100, 50))) {
-				interfaceEvents = NOKS_INTERFACE_EVENT_ADD_COMPONENT;
-			}
 			if (ImGui::Button("addPointLight", ImVec2(100, 50))) {
 				interfaceEvents = NOKS_INTERFACE_EVENT_ADD_POINTLIGHT;
 			}

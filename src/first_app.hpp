@@ -5,6 +5,7 @@
 #include "noks_game_object.hpp"
 #include "noks_renderer.hpp"
 #include "noks_window.hpp"
+#include "gui/noks_user_interface.hpp"
 
 // std
 #include <memory>
@@ -30,6 +31,7 @@ namespace noks {
 
 	private:
 		void loadGameObjects();
+		void manageInterfaceEvents(NoksInterfaceEvents interfaceEvents, NoksUserInterface& userInterface);
 
 		NoksWindow noksWindow{ WIDTH, HEIGHT, "Noks" };
 		NoksDevice noksDevice{ noksWindow };

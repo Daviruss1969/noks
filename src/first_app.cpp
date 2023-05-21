@@ -5,7 +5,6 @@
 #include "noks_camera.hpp"
 #include "systems/point_light_system.hpp"
 #include "systems/simple_render_system.hpp"
-#include "gui/noks_user_interface.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -75,7 +74,7 @@ namespace noks {
 
 		auto currentTime = std::chrono::high_resolution_clock::now();
 
-		NoksInterfaceEvents* interfaceEvents = nullptr;
+		NoksInterfaceEvents interfaceEvents = NOKS_NULL;
 		while (!noksWindow.shouldClose()) {
 			glfwPollEvents();
 			if (userInterface.getWindowStep() == NOKS_WINDOW_STEP_CHOOSE_PROJECT) {
@@ -133,21 +132,7 @@ namespace noks {
 			}
 
 			// check events
-			if (interfaceEvents != nullptr) {
-				if (*interfaceEvents == NOKS_INTERFACE_EVENT_NEW_PROJECT) {
-					newProject();
-					*interfaceEvents = NOKS_NULL; // reset event flags
-				}
-				else if (*interfaceEvents == NOKS_INTERFACE_EVENT_ADD_COMPONENT) {
-					TransformComponent transform{};
-					addGameObjects(userInterface.getgameObjectToAdd(), transform);
-					*interfaceEvents = NOKS_NULL;
-				}
-				else if (*interfaceEvents == NOKS_INTERFACE_EVENT_ADD_POINTLIGHT) {
-					addPointLight(glm::vec3{1.f, 1.f, 1.f});
-					*interfaceEvents = NOKS_NULL;
-				}
-			}
+			manageInterfaceEvents(interfaceEvents, userInterface);
 		}
 
 		vkDeviceWaitIdle(noksDevice.device());
@@ -175,7 +160,21 @@ namespace noks {
 		gameObjects.emplace(pointLight.getId(), std::move(pointLight));
 	}
 
-
+	void FirstApp::manageInterfaceEvents(NoksInterfaceEvents interfaceEvents, NoksUserInterface& userInterface) {
+		if (interfaceEvents == NOKS_INTERFACE_EVENT_NEW_PROJECT) {
+			newProject();
+			userInterface.setInterfaceEvent(NOKS_NULL); // reset event flag
+		}
+		else if (interfaceEvents == NOKS_INTERFACE_EVENT_ADD_COMPONENT) {
+			TransformComponent transform{};
+			addGameObjects(userInterface.getgameObjectToAdd(), transform);
+			userInterface.setInterfaceEvent(NOKS_NULL);
+		}
+		else if (interfaceEvents == NOKS_INTERFACE_EVENT_ADD_POINTLIGHT) {
+			addPointLight(glm::vec3{1.f, 1.f, 1.f});
+			userInterface.setInterfaceEvent(NOKS_NULL);
+		}
+	}
 
 	void FirstApp::loadGameObjects() {
 		//std::shared_ptr<NoksModel> noksModel =
